@@ -93,6 +93,10 @@ import accWithdrawal from '@/pages/user/myWallet/accWithdrawal'
 import Recharge from '@/pages/user/myWallet/Recharge'
 // 代金券
 import CashCoupon from '@/pages/user/myWallet/CashCoupon'
+// 赠送
+import Give from '@/pages/user/myWallet/Give'
+// 赠送记录
+import GiveRecord from '@/pages/user/myWallet/GiveRecord'
 
 // 我的团队
 import myTeam from '@/pages/user/myTeam'
@@ -444,6 +448,20 @@ const router= new Router({
 			path: '/user/CashCoupon',
 			name: 'CashCoupon',
 			component:() => import('@/pages/user/myWallet/CashCoupon'),
+			meta:{requireAuth:true}
+		},
+		// 赠送
+		{
+			path: '/user/Give',
+			name: 'Give',
+			component:() => import('@/pages/user/myWallet/Give'),
+			meta:{requireAuth:true}
+		},
+		// 赠送记录
+		{
+			path: '/user/GiveRecord',
+			name: 'GiveRecord',
+			component:() => import('@/pages/user/myWallet/GiveRecord'),
 			meta:{requireAuth:true}
 		},
 		// 我的团队
