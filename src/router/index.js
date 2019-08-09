@@ -35,10 +35,6 @@ import Cart from '@/pages/cart/Cart'
 
 // 会员卡
 import membershipCard from '@/pages/membershipCard/membershipCard'
-// 我的会员卡
-import SalesCard from '@/pages/membershipCard/SalesCard'
-// 会员卡明细
-import SalesDetails from '@/pages/membershipCard/SalesDetails'
 
 // 补卡
 import ReissueCard from '@/pages/membershipCard/ReissueCard'
@@ -77,26 +73,33 @@ import luckywheel from '@/pages/luckywheel/luckywheel'
 import User from '@/pages/user/User'
 // 个人资料
 import personalData from '@/pages/user/personalData'
+// 邀请链接
+import InviteLink from '@/pages/user/InviteLink'
 
 // 我的收益
 import MyBenefits from '@/pages/user/mybenefits/MyBenefits'
 // 收益详情
 import ProfitDetails from '@/pages/user/mybenefits/ProfitDetails'
 
+// 账户余额
+import AccountBalance from '@/pages/user/accountBalance/AccountBalance'
+// 提现
+import CashWithdrawal from '@/pages/user/accountBalance/CashWithdrawal'
+
 // 我的钱包
 import myWallet from '@/pages/user/myWallet/myWallet'
 // 账单明细
 import BillingDetails from '@/pages/user/myWallet/BillingDetails'
 // 提现
-import accWithdrawal from '@/pages/user/myWallet/accWithdrawal'
+// import accWithdrawal from '@/pages/user/myWallet/accWithdrawal'
 // 充值
 import Recharge from '@/pages/user/myWallet/Recharge'
 // 代金券
 import CashCoupon from '@/pages/user/myWallet/CashCoupon'
 // 赠送
-import Give from '@/pages/user/myWallet/Give'
+import Give from '@/pages/user/accountBalance/Give'
 // 赠送记录
-import GiveRecord from '@/pages/user/myWallet/GiveRecord'
+import GiveRecord from '@/pages/user/accountBalance/GiveRecord'
 
 // 我的团队
 import myTeam from '@/pages/user/myTeam'
@@ -236,20 +239,7 @@ const router= new Router({
 			component: (resolve) => require(['@/pages/membershipCard/membershipCard'],resolve),
 			meta:{requireAuth:true}
 		},
-		// 我的会员卡
-		{
-			path: '/SalesCard',
-			name: 'SalesCard',
-			component: (resolve) => require(['@/pages/membershipCard/SalesCard'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 会员卡明细
-		{
-			path: '/SalesDetails',
-			name: 'SalesDetails',
-			component: (resolve) => require(['@/pages/membershipCard/SalesDetails'],resolve),
-			meta:{requireAuth:true}
-		},
+
 		// 补卡
 		{
 			path: '/ReissueCard',
@@ -399,6 +389,13 @@ const router= new Router({
 			name: 'SetPassword',
 			component:() => import('@/pages/user/SetPassword'),
 		},
+		// 邀请链接
+		{
+			path: '/user/InviteLink',
+			name: 'InviteLink',
+			component:() => import('@/pages/user/InviteLink'),
+			meta:{requireAuth:true}
+		},
 		
 		// 我的收益
 		{
@@ -412,6 +409,35 @@ const router= new Router({
 			path: '/user/ProfitDetails',
 			name: 'ProfitDetails',
 			component: (resolve) => require(['@/pages/user/mybenefits/ProfitDetails'],resolve),
+			meta:{requireAuth:true}
+		},
+
+		// 账户余额
+		{
+			path: '/user/AccountBalance',
+			name: 'AccountBalance',
+			component:() => import('@/pages/user/accountBalance/AccountBalance'),
+			meta:{requireAuth:true}
+		},
+		// 提现
+		{
+			path: '/user/CashWithdrawal',
+			name: 'CashWithdrawal',
+			component:() => import('@/pages/user/accountBalance/CashWithdrawal'),
+			meta:{requireAuth:true}
+		},
+		// 赠送
+		{
+			path: '/user/Give',
+			name: 'Give',
+			component:() => import('@/pages/user/accountBalance/Give'),
+			meta:{requireAuth:true}
+		},
+		// 赠送记录
+		{
+			path: '/user/GiveRecord',
+			name: 'GiveRecord',
+			component:() => import('@/pages/user/accountBalance/GiveRecord'),
 			meta:{requireAuth:true}
 		},
 		
@@ -429,6 +455,7 @@ const router= new Router({
 			component:() => import('@/pages/user/myWallet/BillingDetails'),
 			meta:{requireAuth:true}
 		},
+
 		// 提现
 		{
 			path: '/user/myWallet/accWithdrawal',
@@ -436,6 +463,7 @@ const router= new Router({
 			component:() => import('@/pages/user/myWallet/accWithdrawal'),
 			meta:{requireAuth:true}
 		},
+
 		// 余额充值
 		{
 			path: '/user/myWallet/Recharge',
@@ -450,20 +478,7 @@ const router= new Router({
 			component:() => import('@/pages/user/myWallet/CashCoupon'),
 			meta:{requireAuth:true}
 		},
-		// 赠送
-		{
-			path: '/user/Give',
-			name: 'Give',
-			component:() => import('@/pages/user/myWallet/Give'),
-			meta:{requireAuth:true}
-		},
-		// 赠送记录
-		{
-			path: '/user/GiveRecord',
-			name: 'GiveRecord',
-			component:() => import('@/pages/user/myWallet/GiveRecord'),
-			meta:{requireAuth:true}
-		},
+	
 		// 我的团队
 		{
 			path: '/user/myTeam',

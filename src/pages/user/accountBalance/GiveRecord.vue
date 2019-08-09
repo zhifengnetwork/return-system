@@ -56,6 +56,7 @@ export default {
             nowIndex:0,
             // tab切换标题
             tabTitle:['消费','赚取'],
+            type:this.$route.query.type,
         }
     },
     methods:{
@@ -66,12 +67,38 @@ export default {
             this.nowIndex = index;
             this.$router.replace('/user/GiveRecord?type=' + index);
             this.type = this.$route.query.type;
+            this.requestData();
         },
 
         /**
          * 请求数据
          */
         requestData(){
+            let type = null;
+            let typeArr = ['xf','zq'];
+            typeArr.forEach((i,index) => {  
+                if(this.$route.query.type == index){
+                    type = i
+                    console.log(type)
+                    return
+                }
+            })
+
+            // let type = null;
+            // switch(this.$route.query.type){
+            //     case '0':
+            //         type = 'xf'
+            //         break;
+            //     case '1':
+            //         type = 'zq'
+            //         break;
+            // }
+            // console.log(type)
+
+         
+
+            // for(let (e, i) in types.entries()){
+            //     if(Object.is(this.$route.query.type, i){type = e;break;})}
 
         }
     }
