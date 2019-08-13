@@ -11,6 +11,9 @@ import EditPassword from '@/pages/login/EditPassword'
 // 首页
 import Home from '@/pages/home/Home'
 
+// 投资记录
+import Investment from '@/pages/investment/Investment'
+
 // 公告
 import NoticeList from '@/pages/notice/NoticeList'
 import NoticeDetails from '@/pages/notice/NoticeDetails'
@@ -142,6 +145,16 @@ const router= new Router({
 			name: 'Home',
 			// component:() => import('@/pages/home/Home'),//按需加载
 			component: (resolve) => require(['@/pages/home/Home'],resolve),
+			meta:{requireAuth:true}
+		},
+
+		/**
+		 * 投资记录
+		 */
+		{
+			path: '/Investment',
+			name: 'Investment',
+			component: (resolve) => require(['@/pages/investment/Investment'],resolve),
 			meta:{requireAuth:true}
 		},
 

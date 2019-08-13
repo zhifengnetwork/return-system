@@ -8,15 +8,9 @@
  				</router-link>
  			</li>
  			<li>
- 				<router-link to="/Category">
- 					<i class="category-icon"></i>
- 					<span class="text">分类</span>
- 				</router-link>
- 			</li>
- 			<li>
- 				<router-link to="/Cart">
- 					<i class="cart-icon"></i>
- 					<span class="text">购物车</span>
+ 				<router-link to="/Investment">
+ 					<i class="investment-icon"></i>
+ 					<span class="text">投资记录</span>
  				</router-link>
  			</li>
  			<li>
@@ -45,18 +39,16 @@
 .Navigate
 	width 100%
 	height 98px
-	border-top 1px solid #f8f2f2
-	background #ffffff
+	background #e9e9e9
 	z-index 9
 	position fixed
 	left 0
 	bottom 0
-	border-top 1px solid #ccc
 	ul
 		display flex
 		height inherit
 		li
-			width 25%
+			flex 1
 			a
 				width 100%
 				height 100%
@@ -65,39 +57,32 @@
 				align-items center 
 				justify-content center
 				i
-					width 100%
-					height 40px
-					margin 7px 0
+					width 33px
+					height 38px
+					margin 3px 0
 					display block
 				.home-icon
-					background url(/static/images/public/home-icon1.png) no-repeat center center
-					background-size 45px 40px
-				.category-icon
-					background url(/static/images/public/category-icon1.png) no-repeat center center
-					background-size 40px 39px
-				.cart-icon
-					background url(/static/images/public/cart-icon1.png) no-repeat center center
-					background-size 45px 40px
+					background url(/static/images/public/home-icon2.png) no-repeat center center
+					background-size 33px 38px
+				.investment-icon
+					background url(/static/images/public/investment-icon2.png) no-repeat center center
+					background-size 33px 38px
 				.user-icon
-					background url(/static/images/public/user-icon1.png) no-repeat center center
-					background-size 30px 40px
+					background url(/static/images/public/user-icon2.png) no-repeat center center
+					background-size 33px 38px
 				span
-					font-size 26px;
-					color #7f7f7f
-				
+					font-size 28px;
+					color #686868
 			.router-link-exact-active
 				.home-icon
-					background url(/static/images/public/home-icon-on1.png) no-repeat center center
-					background-size 45px 40px
-				.category-icon
-					background url(/static/images/public/category-icon-on1.png) no-repeat center center
-					background-size 40px 39px
-				.cart-icon
-					background url(/static/images/public/cart-icon-on1.png) no-repeat center center
-					background-size 45px 40px
+					background url(/static/images/public/home-icon-on2.png) no-repeat center center
+					background-size 33px 38px
+				.investment-icon
+					background url(/static/images/public/investment-icon-on2.png) no-repeat center center
+					background-size 33px 38px
 				.user-icon
-					background url(/static/images/public/user-icon-on1.png) no-repeat center center
-					background-size 30px 40px
+					background url(/static/images/public/user-icon-on2.png) no-repeat center center
+					background-size 33px 38px
 				span
 					color #151515	
 </style>

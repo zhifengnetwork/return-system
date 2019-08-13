@@ -10,7 +10,7 @@
                 <div class="user-msg">
                     <p class="user-name">{{userData.realname}}</p>
                     <p class="user-id">ID:{{userData.id}}</p>
-                    <p class="join-time">加入时间：2019.06.12</p>
+                    <p class="join-time">加入时间：{{userData.createtime | formatDate}}</p>
                 </div>
             </div>
             <div class="member-msg">
@@ -117,16 +117,16 @@
         </div>
 
         <!-- 底部 -->
-        <TopHeader></TopHeader>
+        <Navigate></Navigate>
     </div>
 </template>
 
 <script>
-    import TopHeader from "@/pages/common/footer/Navigate";
+    import Navigate from "@/pages/common/footer/Navigate";
     export default {
         name: "User",
         components: {
-            TopHeader,
+            Navigate,
         },
         data() {
             return {
