@@ -20,7 +20,7 @@
                 </router-link>
             </div>
             <div class="link-list">               
-                <router-link to="#">
+                <router-link to="/user/WithdrawalDetails">
                     <div class="link-item">
                         <div class="text">提现明细</div>
                         <div class="more"></div>
@@ -32,7 +32,7 @@
                         <div class="more"></div>
                     </div>
                 </router-link>
-                <router-link to="#">
+                <router-link to="/user/BillDetails?type=0">
                     <div class="link-item">
                         <div class="text">账单明细</div>
                         <div class="more"></div>

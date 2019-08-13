@@ -28,8 +28,8 @@
             <!-- 模块 -->
             <div class="module-area">
                 <div class="module-item">
-                    <router-link to="/user/myWallet">
-                        <p class="number">100</p>
+                    <router-link to="/user/AccountBalance">
+                        <p class="number">{{userData.remainder_money}}</p>
                         <p class="sub-title">
                             <span class="text">余额</span>
                             <i class="right-arrow"></i>
@@ -37,7 +37,7 @@
                     </router-link>
                 </div>
                 <div class="module-item">
-                    <router-link to="/user/MyBenefits">
+                    <router-link to="/user/CommissionList">
                         <p class="number">500</p>
                         <p class="sub-title">
                             <span class="text">佣金</span>
@@ -46,7 +46,7 @@
                     </router-link>
                 </div>
                 <div class="module-item">
-                    <router-link to="/user/myTeam">
+                    <router-link to="/user/TeamList">
                         <div class="link-item">
                             <p class="number">148</p>
                             <p class="sub-title">
@@ -68,7 +68,7 @@
                         <div class="more"></div>
                     </div>
                 </router-link>
-                <router-link to="#">
+                <router-link to="/user/ReceiptInformation">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/money-icon.png" /></span>

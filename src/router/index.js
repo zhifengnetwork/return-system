@@ -10,16 +10,11 @@ import EditPassword from '@/pages/login/EditPassword'
 
 // 首页
 import Home from '@/pages/home/Home'
-// vip导航
-import VipNav from '@/pages/home/VipNav'
 
 // 公告
 import NoticeList from '@/pages/notice/NoticeList'
 import NoticeDetails from '@/pages/notice/NoticeDetails'
 import NewsDetails from '@/pages/notice/NewsDetails'
-
-// 会员免费领取专区
-import FreeZone from '@/pages/freezone/FreeZone'
 
 // 搜索
 import Search from '@/pages/search/Search'
@@ -32,16 +27,6 @@ import Details from '@/pages/details/Details'
 
 // 购物车
 import Cart from '@/pages/cart/Cart'
-
-// 会员卡
-import membershipCard from '@/pages/membershipCard/membershipCard'
-
-// 补卡
-import ReissueCard from '@/pages/membershipCard/ReissueCard'
-// 联系上级补卡
-import sjReissueCard from '@/pages/membershipCard/sjReissueCard'
-// 补卡记录
-import MoreReissueCard from '@/pages/membershipCard/MoreReissueCard'
 
 // 订单列表
 import Order from '@/pages/order/Order'
@@ -85,30 +70,30 @@ import ProfitDetails from '@/pages/user/mybenefits/ProfitDetails'
 import AccountBalance from '@/pages/user/accountBalance/AccountBalance'
 // 提现
 import CashWithdrawal from '@/pages/user/accountBalance/CashWithdrawal'
-
-// 我的钱包
-import myWallet from '@/pages/user/myWallet/myWallet'
-// 账单明细
-import BillingDetails from '@/pages/user/myWallet/BillingDetails'
-// 提现
-// import accWithdrawal from '@/pages/user/myWallet/accWithdrawal'
-// 充值
-import Recharge from '@/pages/user/myWallet/Recharge'
-// 代金券
-import CashCoupon from '@/pages/user/myWallet/CashCoupon'
+// 提现明细
+import WithdrawalDetails from '@/pages/user/accountBalance/WithdrawalDetails'
+// 支付宝账号编辑
+import EditAlipay from '@/pages/user/accountBalance/EditAlipay'
 // 赠送
 import Give from '@/pages/user/accountBalance/Give'
 // 赠送记录
 import GiveRecord from '@/pages/user/accountBalance/GiveRecord'
+// 账单明细
+import BillDetails from '@/pages/user/accountBalance/BillDetails'
+// 收款信息
+import ReceiptInformation from '@/pages/user/ReceiptInformation'
 
-// 我的团队
-import myTeam from '@/pages/user/myTeam'
+// 团队列表
+import TeamList from '@/pages/user/TeamList'
+// 查看订单
+import ViewOrders from '@/pages/user/ViewOrders'
+
+// 佣金明细
+import CommissionList from '@/pages/user/CommissionList'
 
 // 我的分享
-import mySharing from '@/pages/user/mySharing'
+import MySharing from '@/pages/user/MySharing'
 
-// 支付宝账号编辑
-import alipay from '@/pages/user/alipay'
 // 修改用户名
 import modifyUserName from '@/pages/user/modifyUserName'
 
@@ -159,16 +144,6 @@ const router= new Router({
 			component: (resolve) => require(['@/pages/home/Home'],resolve),
 			meta:{requireAuth:true}
 		},
-		/**
-		 * 首页
-		 */
-		{
-			path: '/VipNav',
-			name: 'VipNav',
-			// component:() => import('@/pages/home/Home'),//按需加载
-			component: (resolve) => require(['@/pages/home/VipNav'],resolve),
-			meta:{requireAuth:true}
-		},
 
 		/**
 		 * 公告
@@ -192,14 +167,6 @@ const router= new Router({
 			path: '/notice/NewsDetails',
 			name: 'NewsDetails',
 			component:() => import('@/pages/notice/NewsDetails'),
-			meta:{requireAuth:true}
-		},
-
-		// 会员免费领取专区
-		{
-			path: '/FreeZone',
-			name: 'FreeZone',
-			component:() => import('@/pages/freezone/FreeZone'),
 			meta:{requireAuth:true}
 		},
 
@@ -230,35 +197,6 @@ const router= new Router({
 			path: '/Cart',
 			name: 'Cart',
 			component: (resolve) => require(['@/pages/cart/Cart'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 会员卡
-		{
-			path: '/membershipCard',
-			name: 'membershipCard',
-			component: (resolve) => require(['@/pages/membershipCard/membershipCard'],resolve),
-			meta:{requireAuth:true}
-		},
-
-		// 补卡
-		{
-			path: '/ReissueCard',
-			name: 'ReissueCard',
-			component: (resolve) => require(['@/pages/membershipCard/ReissueCard'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 联系上级补卡
-		{
-			path: '/sjReissueCard',
-			name: 'sjReissueCard',
-			component: (resolve) => require(['@/pages/membershipCard/sjReissueCard'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 补卡记录
-		{
-			path: '/MoreReissueCard',
-			name: 'MoreReissueCard',
-			component: (resolve) => require(['@/pages/membershipCard/MoreReissueCard'],resolve),
 			meta:{requireAuth:true}
 		},
 	
@@ -426,6 +364,21 @@ const router= new Router({
 			component:() => import('@/pages/user/accountBalance/CashWithdrawal'),
 			meta:{requireAuth:true}
 		},
+		// 提现明细
+		{
+			path: '/user/WithdrawalDetails',
+			name: 'WithdrawalDetails',
+			component:() => import('@/pages/user/accountBalance/WithdrawalDetails'),
+			meta:{requireAuth:true}
+		},
+		// 支付宝账号编辑
+		{
+			path: '/user/EditAlipay',
+			name: 'EditAlipay',
+			component:() => import('@/pages/user/accountBalance/EditAlipay'),
+			meta:{requireAuth:true}
+		},
+
 		// 赠送
 		{
 			path: '/user/Give',
@@ -440,66 +393,48 @@ const router= new Router({
 			component:() => import('@/pages/user/accountBalance/GiveRecord'),
 			meta:{requireAuth:true}
 		},
-		
-		// 我的钱包
-		{
-			path: '/user/myWallet',
-			name: 'myWallet',
-			component:() => import('@/pages/user/myWallet/myWallet'),
-			meta:{requireAuth:true}
-		},
 		// 账单明细
 		{
-			path: '/user/myWallet/BillingDetails',
-			name: 'BillingDetails',
-			component:() => import('@/pages/user/myWallet/BillingDetails'),
+			path: '/user/BillDetails',
+			name: 'BillDetails',
+			component:() => import('@/pages/user/accountBalance/BillDetails'),
 			meta:{requireAuth:true}
 		},
-
-		// 提现
+		// 收款信息
 		{
-			path: '/user/myWallet/accWithdrawal',
-			name: 'accWithdrawal',
-			component:() => import('@/pages/user/myWallet/accWithdrawal'),
+			path: '/user/ReceiptInformation',
+			name: 'ReceiptInformation',
+			component:() => import('@/pages/user/ReceiptInformation'),
 			meta:{requireAuth:true}
 		},
-
-		// 余额充值
+		// 团队列表
 		{
-			path: '/user/myWallet/Recharge',
-			name: 'Recharge',
-			component:() => import('@/pages/user/myWallet/Recharge'),
+			path: '/user/TeamList',
+			name: 'TeamList',
+			component:() => import('@/pages/user/TeamList'),
 			meta:{requireAuth:true}
 		},
-		// 代金券
+		// 查看订单
 		{
-			path: '/user/CashCoupon',
-			name: 'CashCoupon',
-			component:() => import('@/pages/user/myWallet/CashCoupon'),
+			path: '/user/ViewOrders',
+			name: 'ViewOrders',
+			component:() => import('@/pages/user/ViewOrders'),
 			meta:{requireAuth:true}
 		},
-	
-		// 我的团队
+		// 佣金明细
 		{
-			path: '/user/myTeam',
-			name: 'myTeam',
-			component:() => import('@/pages/user/myTeam'),
+			path: '/user/CommissionList',
+			name: 'CommissionList',
+			component:() => import('@/pages/user/CommissionList'),
 			meta:{requireAuth:true}
 		},
 		
+	
 		// 我的分享
 		{
-			path: '/user/mySharing',
+			path: '/user/MySharing',
 			name: 'mySharing',
-			component:() => import('@/pages/user/mySharing'),
-			meta:{requireAuth:true}
-		},
-
-		// 支付宝账号编辑
-		{
-			path: '/user/alipay',
-			name: 'alipay',
-			component:() => import('@/pages/user/alipay'),
+			component:() => import('@/pages/user/MySharing'),
 			meta:{requireAuth:true}
 		},
 		
@@ -560,11 +495,6 @@ router.beforeEach((to,from,next) =>{
 		}else{
 			let token = localStorage.getItem('Authorization');
 			if(token === null || token === ''){		//判断是否有token
-				// Dialog.confirm({
-				// 	message: '亲，还没有登录哦!'
-				// }).then(() =>{
-				// 	next('/Login');
-				// })
 				next('/Login');
 			}else{
 				next()
