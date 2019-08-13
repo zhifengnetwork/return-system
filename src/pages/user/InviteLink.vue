@@ -1,145 +1,147 @@
 <template>
-    <div class="LinkSharing">
+    <div class="InviteLink">
         <!-- 头部组件 -->
-		<Link-Header custom-title="邀请链接" custom-fixed class="head">
-			<!-- 返回按钮 -->
-			<i slot="backBtn" class="iconfont icon-fanhui"></i>
-		</Link-Header>
+        <TopHeader custom-title="邀请链接">
+            <i slot="backBtn" class="iconfont icon-fanhui"></i>
+        </TopHeader>
+
         <div class="content">
-            <div class="main">
-                <div class="img_head">
-                    <div class="img">
-                        <img :src="siteList.avatar"/>
+            <div class="share-container">
+                <div class="user-info">
+                    <div class="avatar">
+                        <img :src="userData.avatar" />
                     </div>
-                    <div class="name">
-                        <div class="realname">{{siteList.realname}}</div>
-                        <div class="realname"><span>ID：</span>{{siteList.id}}</div>
+                    <div class="user-id">
+                        <span>{{userData.realname}}</span>
+                        <span class="id">ID: {{userData.id}}</span>
                     </div>
                 </div>
-                <div class="url">{{link}}</div>
+                <div class="link">{{linkUrl}}</div>
 
-                <div class="copyBtn" 
-                v-clipboard:copy="link"
-                v-clipboard:success="onCopy"
-                v-clipboard:error="onError"
-                >复制地址</div>
+                <div class="copy-btn"
+                    v-clipboard:copy="linkUrl"
+                    v-clipboard:success="onCopy"
+                    v-clipboard:error="onError">
+                    复制地址
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
-    import LinkHeader from "@/pages/common/header/TopHeader"
-    import { Toast } from 'vant'
-    import VueClipboard from 'vue-clipboard2'
-    export default {
-	name: "InviteLink",
-	data() {
-		return {
-            siteList:[],
-            link:''
-        };
+import TopHeader from "@/pages/common/header/TopHeader"
+import VueClipboard from 'vue-clipboard2'
+export default {
+    name:'InviteLink',
+    components: {
+        TopHeader,
     },
-    methods: {
-        
-        // 接口
-        sharing() {
-            
-            var url = 'user/shareUrl'
-            var params = new URLSearchParams();
-            params.append('token', this.$store.getters.optuser.Authorization);  
-            this.$axios({
-                method:"post",
-                url:url,
-                data:params
-            }).then((res)=>{
-                if(res.data.status === 200){
-                    this.siteList = res.data.data
-                    this.link =this.globalUrl+'/Register'+this.siteList.url
-                } else {
-                    Dialog.alert({
-                        message:res.data.msg
-                    })
+    data(){
+        return{
+            userData:{}, //用户信息
+            linkUrl:'', // 邀请链接
+        }
+    },
+    created(){
+        this.$store.commit('showLoading');
+        this.getData();
+    },
+    methods:{
+        /**
+         * 获取用户数据
+         */
+        getData(){
+            let url = 'user/shareUrl';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization,
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.userData = res.data.data;
+                    this.linkUrl = this.globalUrl + '/Register' + this.userData.url;
+                }else{
+                    this.$toast(res.data.msg)
                 }
+                this.$store.commit('hideLoading');
+            }).catch((error) => {
+                this.$toast(error)
             })
         },
+        
         // 复制成功回调
         onCopy:function(e){
-            Toast('复制成功');
-            console.log(e)
-           
+            // console.log(e)
+            this.$toast('复制成功');
         },
+
         // 复制失败回调
-        onError:function(){}
+        onError:function(){
+            this.$toast('复制失败');
+        }
+        
     },
-    mounted () {
-        this.sharing();
-    },
-	components: {
-        LinkHeader,
-    },
-};
+   
+}
 </script>
 
 <style lang="stylus" scoped>
-    .LinkSharing
-        width 100%
-        height 100vh
-        background url(/static/images/user/bnner.png) no-repeat
-        background-size 100% 100%           
-        .head
-            color #fff
-            background none
-        .content
-            padding 232px 0 0
-            .main
+.InviteLink
+    width 100%
+    height 100vh
+    background url("/static/images/user/share-bg.png") no-repeat
+    background-size 750px 1334px
+    & /deep/ .TopHeader
+        background none
+        color #ffffff
+        border-bottom none
+    .content
+        height calc(100vh - 88px)
+        padding 0 24px
+        box-sizing border-box
+        display flex
+        align-items center
+        justify-content center
+        .share-container
+            width 100%
+            height 930px
+            background #272439
+            border-radius 10px
+            position relative
+            .user-info
+                text-align center
                 position relative
+                top -85px
+                .avatar
+                    width 160px
+                    height 160px
+                    border-radius 50%
+                    overflow hidden
+                    margin 0 auto 15px
+                    img 
+                        width 100%
+                .user-id
+                    font-size 30px
+                    color #f50c7a
+                    .id
+                        color #ffffff 
+                        margin-left 20px
+            .link
+                font-size 26px
+                color #fae1e8
+                text-align center
+                line-height 50px
+                margin 100px 0
+            .copy-btn
+                width 300px
+                height 50px
+                font-size 26px
+                text-align center
+                line-height 50px
+                color #ffffff
+                background-color #e12282
+                border-radius 25px
                 margin 0 auto
-                width 702px
-                height 780px
-                background #272439
-                border-radius 10px
-                .img_head
-                    padding 82px 0 0
-                    .img 
-                        margin 0 auto
-                        position absolute
-                        top -85px
-                        left 271px
-                        width 160px
-                        height 160px
-                        border 2px solid #fff
-                        border-radius 50%
-                        img 
-                            border-radius 50%
-                    .name 
-                        font-size 30px
-                        line-height 55px
-                        text-align center
-                        .realname 
-                            color #fff
-                            span 
-                                color #f50c7a
-                .url 
-                    margin 45px 0 0
-                    font-size 26px
-                    color #fff 
-                    text-align center
-                    line-height 45px               
-                .copyBtn
-                    margin 60px auto
-                    width 300px
-                    height 50px
-                    background-color #e12282
-                    border-radius 25px 
-                    font-size 26px
-                    color #fff
-                    text-align center
-                    line-height 50px               
 
-img
-    display block
-    margin 0 auto
-    max-width 100%
-    height 100%                        
+
 </style>
