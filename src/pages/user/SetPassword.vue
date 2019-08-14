@@ -8,20 +8,20 @@
         <div class="edit-container">
             <div class="form-group">
                 <i class="icon tel-icon"></i>
-                <input type="number" placeholder="输入手机号" v-model="phone">
+                <input type="number" placeholder="请输入手机号" v-model="phone">
             </div>
             <div class="form-group">
                 <i class="icon verify-icon"></i>
-                <input type="text" placeholder="输入验证码" v-model="verifyCode">
+                <input type="text" placeholder="请输入验证码" v-model="verifyCode">
                 <button class="verifyCode" :disabled="disabled" @click="getVerifyCode()">{{verifyText}}</button>
             </div>
             <div class="form-group">
                 <i class="icon password-icon"></i>
-                <input type="password" placeholder="输入密码" v-model="password" >
+                <input type="password" placeholder="请输入密码" v-model="password" >
             </div>
             <div class="form-group">
                 <i class="icon password-icon"></i>
-                <input type="password" placeholder="再次输入密码" v-model="password2" >
+                <input type="password" placeholder="请再次输入密码" v-model="password2" >
             </div>
 
             <div class="btn" :class="{'hiLine':phone!='','hiLine':verifyCode!='','hiLine':password!='' ,'hiLine':password2!=''}" @click="confirmClick()">确定</div>

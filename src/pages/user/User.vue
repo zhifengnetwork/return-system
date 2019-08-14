@@ -3,7 +3,7 @@
         <div class="header">
            <div class="user-info">
                 <div class="avatar">
-                    <router-link to="/user/personalData">
+                    <router-link to="/user/PersonalData">
                         <img :src="userData.avatar"/>  
                     </router-link>
                 </div>
@@ -276,7 +276,7 @@
                     min-height 14px
                     color #525252
                     font-size 24px
-                    background url(/static/images/user/leftArrow.png) no-repeat right center
+                    background url(/static/images/user/right-arrow2.png) no-repeat right center
                     background-size 8px 14px
                     padding-right 22px
             .module-area

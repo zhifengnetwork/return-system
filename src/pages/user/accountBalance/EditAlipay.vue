@@ -10,7 +10,7 @@
                 <div class="input-group">
                     <div class="sub-title">支付宝账号:</div>
                     <div class="inp-wrap">
-                        <input type="text" placeholder="请输入支付宝账号" v-model="alipay" />
+                        <input type="text" placeholder="请输入支付宝账号" v-focus v-model="alipay" />
                     </div>
                 </div>
                 <div class="input-group">

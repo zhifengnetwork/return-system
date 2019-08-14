@@ -60,7 +60,7 @@ import luckywheel from '@/pages/luckywheel/luckywheel'
 // 我的
 import User from '@/pages/user/User'
 // 个人资料
-import personalData from '@/pages/user/personalData'
+import PersonalData from '@/pages/user/PersonalData'
 // 邀请链接
 import InviteLink from '@/pages/user/InviteLink'
 
@@ -98,7 +98,7 @@ import CommissionList from '@/pages/user/CommissionList'
 import MySharing from '@/pages/user/MySharing'
 
 // 修改用户名
-import modifyUserName from '@/pages/user/modifyUserName'
+import EditUserName from '@/pages/user/EditUserName'
 
 // 收藏
 import Collect from '@/pages/user/Collect'
@@ -321,17 +321,16 @@ const router= new Router({
 		},
 		// 个人资料
 		{
-			path: '/user/personalData',
-			name: 'personalData',
-			// component:() => import('@/pages/user/personalData'),
-			component: (resolve) => require(['@/pages/user/personalData'],resolve),
+			path: '/user/PersonalData',
+			name: 'PersonalData',
+			component: (resolve) => require(['@/pages/user/PersonalData'],resolve),
 			meta:{requireAuth:true}
 		},
 		// 修改用户名
 		{
-			path: '/user/modifyUserName',
-			name: 'modifyUserName',
-			component:() => import('@/pages/user/modifyUserName'),
+			path: '/user/EditUserName',
+			name: 'EditUserName',
+			component:() => import('@/pages/user/EditUserName'),
 			meta:{requireAuth:true}
 		},
 		// 修改支付密码

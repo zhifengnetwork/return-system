@@ -3,25 +3,25 @@
         
         <h1>
             <i slot="backBtn" @click="goBack()"  class="iconfont icon-fanhui"></i>
-            修改密码
+            <span class="title">修改登录密码</span>
         </h1>
         <div class="edit-container">
             <div class="form-group">
                 <i class="icon tel-icon"></i>
-                <input type="number" placeholder="输入手机号" v-model="phone">
+                <input type="number" placeholder="请输入手机号" v-model="phone">
             </div>
             <div class="form-group">
                 <i class="icon verify-icon"></i>
-                <input type="text" placeholder="输入验证码" v-model="verifyCode">
+                <input type="text" placeholder="请输入验证码" v-model="verifyCode">
                 <button class="verifyCode" :disabled="disabled" @click="getVerifyCode()">{{verifyText}}</button>
             </div>
             <div class="form-group">
                 <i class="icon password-icon"></i>
-                <input type="password" placeholder="输入密码" v-model="password" >
+                <input type="password" placeholder="请输入密码" v-model="password" >
             </div>
             <div class="form-group">
                 <i class="icon password-icon"></i>
-                <input type="password" placeholder="再次输入密码" v-model="password2" >
+                <input type="password" placeholder="请再次输入密码" v-model="password2" >
             </div>
 
             <div class="btn" :class="{'hiLine':phone!=''}" @click="confirmClick()">确定</div>
@@ -217,17 +217,19 @@ export default {
     background-color #ffffff
     h1
         height 208px
-        line-height 208px
-        text-align center
         font-weight normal
         font-size 36px
+        display flex
+        align-items center
+        justify-content center
         position relative
         .iconfont
+            width 30px
+            height 30px
+            display inline-block
             position absolute
-            top 10px
-            left 0
+            left 24px
             padding 3px
-            height 80px
     .edit-container
         padding 0 24px
         box-sizing border-box
