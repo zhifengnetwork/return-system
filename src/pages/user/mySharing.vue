@@ -1,7 +1,7 @@
 <template>
     <div class="MySharing">
         <!-- 头部组件 -->
-        <TopHeader custom-title="我的分享">
+        <TopHeader custom-title="我的推广">
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
         </TopHeader>
 
@@ -22,6 +22,16 @@
                     </div>
                 </div>
                 <div class="text">长按二维码保存</div>
+
+                <div class="link">{{linkUrl}}</div>
+
+                <div class="copy-btn"
+                    v-clipboard:copy="linkUrl"
+                    v-clipboard:success="onCopy"
+                    v-clipboard:error="onError">
+                    复制邀请链接
+                </div>
+
             </div>
         </div>
 
@@ -30,6 +40,7 @@
 
 <script>
 import TopHeader from "@/pages/common/header/TopHeader"
+import VueClipboard from 'vue-clipboard2'
 export default {
     name:'MySharing',
     components: {
@@ -39,6 +50,7 @@ export default {
         return{
             userData:{}, //用户信息
             codeUrl:'', // 二维码链接
+            linkUrl:'', // 邀请链接
         }
     },
     created(){
@@ -56,7 +68,9 @@ export default {
             }).then((res) => {
                 if(res.data.status == 200){
                     this.userData = res.data.data;
+                    this.linkUrl = this.globalUrl + '/Register' + this.userData.url;
                     this.getQrCode(); //获取二维码
+                    console.log(res)
                 }else{
                     this.$toast(res.data.msg)
                 }
@@ -85,6 +99,17 @@ export default {
             }).catch((error) => {
                 this.$toast(error)
             })
+        },
+
+        // 复制成功回调
+        onCopy:function(e){
+            // console.log(e)
+            this.$toast('复制成功');
+        },
+
+        // 复制失败回调
+        onError:function(){
+            this.$toast('复制失败');
         }
         
     },
@@ -117,8 +142,8 @@ export default {
             position relative
             .user-info
                 text-align center
-                position relative
-                top -85px
+                margin-top -85px
+                margin-bottom 40px
                 .avatar
                     width 160px
                     height 160px
@@ -154,8 +179,26 @@ export default {
                         height 318px
             .text
                 font-size 30px
-                line-height 108px
+                line-height 100px
                 text-align center
+            .link
+                width 80%
+                font-size 26px
+                color #151515
+                line-height 34px
+                margin 0px auto 40px
+                word-break break-all 
+            .copy-btn
+                width 266px
+                height 50px
+                font-size 26px
+                text-align center
+                line-height 50px
+                color #ffffff
+                background-color #ff164d
+                border-radius 10px
+                margin 0 auto
+
 
 
 </style>

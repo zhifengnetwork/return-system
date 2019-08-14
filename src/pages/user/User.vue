@@ -97,7 +97,7 @@
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/share-icon.png" /></span>
-                            <span class="text">我的分享</span>
+                            <span class="text">我的推广</span>
                         </div>
                         <div class="more"></div>
                     </div>

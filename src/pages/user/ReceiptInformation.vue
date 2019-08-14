@@ -5,30 +5,42 @@
             <i slot="backBtn" class="iconfont icon-fanhui"></i>
         </TopHeader>
         <div class="content">
-            <div class="receivables-wrap" v-if="receiptData">
-                <div class="list-item">
-                    <div class="sub-title">收款人:</div>
-                    <div class="text">{{receiptData.title}}</div>
+            <div class="receipt-wrap" v-if="receiptData">
+                <div class="receipt-info">
+                    <div class="list-item">
+                        <div class="sub-title">收款人:</div>
+                        <div class="text">{{receiptData.title}}</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="sub-title">电话:</div>
+                        <div class="text">{{receiptData.name}}</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="sub-title">账号:</div>
+                        <div class="text">{{receiptData.value}}</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="sub-title">银行:</div>
+                        <div class="text">{{receiptData.remark}}</div>
+                    </div>
                 </div>
-                <div class="list-item">
-                    <div class="sub-title">电话:</div>
-                    <div class="text">{{receiptData.name}}</div>
+
+                <div class="code-list">
+                    <div class="code-item weChat">
+                        <div class="code">
+                            <img src="/static/images/user/payment-code.png" />
+                        </div>
+                        <p class="sub-title">微信收款二维码</p>
+                    </div>
+                    <div class="code-item alipay">
+                        <div class="code">
+                            <img src="/static/images/user/payment-code.png" />
+                        </div>
+                        <p class="sub-title">支付宝收款二维码</p>
+                    </div>
                 </div>
-                <div class="list-item">
-                    <div class="sub-title">账号:</div>
-                    <div class="text">{{receiptData.value}}</div>
-                </div>
-                <div class="list-item">
-                    <div class="sub-title">银行:</div>
-                    <div class="text">{{receiptData.remark}}</div>
-                </div>
-                <!-- <div class="code">
-                    <img src="/static/images/user/receivablesCode.png" />
-                </div>
-                <div class="tips">
-                    <p>充值余额请添加客服微信，微信客服充值时间:早上09:00起充值一晚上21:30截止，超过充值时间充值，第二天会员余额自动到账</p>
-                </div> -->
             </div>
+
             <!-- 无数据 -->
             <div class="none" v-else>
                 <img src="/static/images/public/none.png"/>
@@ -65,6 +77,7 @@
                token:this.$store.getters.optuser.Authorization,
            }).then((res) => {
                if(res.data.status == 200){
+                   console.log(res)
                    this.receiptData = res.data.data;
                }else{
                    this.$toast(res.data.msg) 
@@ -81,15 +94,16 @@
 
 <style lang="stylus" scoped>
 .content
-    margin-top 20px
+    margin-top 30px
     padding 0 24px
     box-sizing border-box       
-    .receivables-wrap
+    .receipt-info
         width 100%
         height 100%
+        background-color #fff
         padding 18px
         box-sizing border-box
-        background-color #fff
+        margin-bottom 30px
         .list-item
             font-size 28px
             line-height 60px
@@ -100,17 +114,29 @@
                 margin-right 10px
             .text
                 flex 1
-        .code
-            display flex
-            align-items center
-            justify-content center
-            margin-bottom 40px
-            img 
-                width 340px
-        .tips
-            font-size 28px
-            color #151515
-            line-height 46px   
+    .code-list
+        .code-item
+            margin-bottom 20px
+            &.weChat
+                background url("/static/images/user/weChat-code-bg.png") no-repeat
+                background-size 100%
+            &.alipay
+                background url("/static/images/user/alipay-code-bg.png") no-repeat
+                background-size 100%
+            .code
+                width 100%
+                height 300px
+                display flex
+                align-items center
+                justify-content center
+                img 
+                    width 260px
+                    height 260px
+            .sub-title
+                font-size 30px
+                text-align center
+                line-height 50px
+                margin 10px 0
     .none
         text-align center
         margin 150px auto
