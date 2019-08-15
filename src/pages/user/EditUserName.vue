@@ -102,8 +102,5 @@
                     position fixed
                     left 50%
                     margin-left -46%
-                    bottom 30px
-                        
-                    
-                        
+                    bottom 30px                        
 </style>

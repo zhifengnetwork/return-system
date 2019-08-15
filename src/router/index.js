@@ -13,49 +13,12 @@ import Home from '@/pages/home/Home'
 
 // 投资记录
 import Investment from '@/pages/investment/Investment'
+// 投资购买
+import Purchase from '@/pages/investment/Purchase'
 
 // 公告
 import NoticeList from '@/pages/notice/NoticeList'
 import NoticeDetails from '@/pages/notice/NoticeDetails'
-import NewsDetails from '@/pages/notice/NewsDetails'
-
-// 搜索
-import Search from '@/pages/search/Search'
-
-// 分类
-import Category from '@/pages/category/Category'
-
-// 商品详情
-import Details from '@/pages/details/Details'
-
-// 购物车
-import Cart from '@/pages/cart/Cart'
-
-// 订单列表
-import Order from '@/pages/order/Order'
-// 订单详情
-import OrderDetails from '@/pages/order/OrderDetails'
-// 物流
-import LogisticsDetail from '@/pages/order/LogisticsDetail'
-
-// 提交评价
-import Evaluate from '@/pages/order/Evaluate'
-// 退货
-import ReturnGoods from '@/pages/order/ReturnGoods'
-// 申请退款
-import ReturnRequest from '@/pages/order/ReturnRequest'
-
-// 确认订单
-import ConfirmOrder from '@/pages/pay/ConfirmOrder'
-// 支付方式
-import PayWay from '@/pages/pay/PayWay'
-// 支付成功
-import PaySucceed from '@/pages/pay/PaySucceed'
-// 支付失败
-import PayFail from '@/pages/pay/PayFail'
-
-// 大转盘
-import luckywheel from '@/pages/luckywheel/luckywheel'
 
 // 我的
 import User from '@/pages/user/User'
@@ -99,9 +62,6 @@ import MySharing from '@/pages/user/MySharing'
 
 // 修改用户名
 import EditUserName from '@/pages/user/EditUserName'
-
-// 收藏
-import Collect from '@/pages/user/Collect'
 
 // 收货地址
 import Address from '@/pages/user/address/Address'
@@ -157,7 +117,16 @@ const router= new Router({
 			component: (resolve) => require(['@/pages/investment/Investment'],resolve),
 			meta:{requireAuth:true}
 		},
-
+		/**
+		 * 投资购买
+		 */
+		{
+			path: '/Purchase',
+			name: 'Purchase',
+			component: (resolve) => require(['@/pages/investment/Purchase'],resolve),
+			meta:{requireAuth:true}
+		},
+		
 		/**
 		 * 公告
 		 */
@@ -175,139 +144,6 @@ const router= new Router({
 			component:() => import('@/pages/notice/NoticeDetails'),
 			meta:{requireAuth:true}
 		},	
-		// 资讯详情
-		{
-			path: '/notice/NewsDetails',
-			name: 'NewsDetails',
-			component:() => import('@/pages/notice/NewsDetails'),
-			meta:{requireAuth:true}
-		},
-
-		/**
-		 * 搜索
-		 */
-		{
-			path: '/Search',
-			name: 'Search',
-			component:() => import('@/pages/search/Search'),
-			meta:{requireAuth:true}
-		},
-
-		/**
-		 * 分类
-		 */
-		{
-			path: '/Category',
-			name: 'Category',
-			component:() => import('@/pages/category/Category'),
-			meta:{requireAuth:true} //是否需要登录
-		},
-
-		/**
-		 * 购物车
-		 */
-		{
-			path: '/Cart',
-			name: 'Cart',
-			component: (resolve) => require(['@/pages/cart/Cart'],resolve),
-			meta:{requireAuth:true}
-		},
-	
-		/**
-		 * 商品详情页 
-		 */ 
-		{
-			path: '/Details',
-			name: 'Details',
-			component:() => import('@/pages/details/Details'),
-			meta:{requireAuth:true}
-		},
-
-		/**
-		 * 
-		 * 订单中心
-		 */
-		// 订单列表
-		{
-			path: '/Order',
-			name: 'Order',
-			component:() => import('@/pages/order/Order'),
-			meta:{requireAuth:true}
-		},
-		// 订单详情
-		{
-			path: '/Order/OrderDetails',
-			name: 'OrderDetails',
-			component:() => import('@/pages/order/OrderDetails'),
-			meta:{requireAuth:true}
-		},
-		// 物流
-		{
-			path: '/Order/LogisticsDetail',
-			name: 'LogisticsDetail',
-			component:() => import('@/pages/order/LogisticsDetail'),
-			meta:{requireAuth:true}
-		},
-		// 提交评价
-		{
-			path: '/Order/Evaluate',
-			name: 'Evaluate',
-			component: (resolve) => require(['@/pages/order/Evaluate'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 退货
-		{
-			path: '/Order/ReturnGoods',
-			name: 'ReturnGoods',
-			component: (resolve) => require(['@/pages/order/ReturnGoods'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 退款申请
-		{
-			path: '/Order/ReturnRequest',
-			name: 'ReturnRequest',
-			component: (resolve) => require(['@/pages/order/ReturnRequest'],resolve),
-			meta:{requireAuth:true}
-		},
-
-		/**
-		 * 支付模块
-		 */
-		// 确认订单
-		{
-			path: '/Pay/ConfirmOrder',
-			name: 'ConfirmOrder',
-			component: (resolve) => require(['@/pages/pay/ConfirmOrder'],resolve),
-		},
-		// 支付方式
-		{
-			path: '/Pay/PayWay',
-			name: 'PayWay',
-			component: (resolve) => require(['@/pages/pay/PayWay'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 支付成功
-		{
-			path: '/Pay/PaySucceed',
-			name: 'PaySucceed',
-			component: (resolve) => require(['@/pages/pay/PaySucceed'],resolve),
-			meta:{requireAuth:true}
-		},
-		// 支付失败
-		{
-			path: '/Pay/PayFail',
-			name: 'PayFail',
-			component: (resolve) => require(['@/pages/pay/PayFail'],resolve),
-			meta:{requireAuth:true}
-		},
-
-		// 幸运大转盘
-		{
-			path: '/luckywheel',
-			name: 'luckywheel',
-			component: (resolve) => require(['@/pages/luckywheel/luckywheel'],resolve),
-			meta:{requireAuth:true}
-		},
 
 		/**
 		 * 我的
@@ -449,14 +285,7 @@ const router= new Router({
 			component:() => import('@/pages/user/MySharing'),
 			meta:{requireAuth:true}
 		},
-		
-		// 收藏
-		{
-			path: '/user/Collect',
-			name: 'Collect',
-			component:() => import('@/pages/user/Collect'),
-			meta:{requireAuth:true}
-		},
+
 		/**
 		 * 地址管理
 		 */

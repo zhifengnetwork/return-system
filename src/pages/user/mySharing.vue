@@ -9,11 +9,11 @@
             <div class="share-container">
                 <div class="user-info">
                     <div class="avatar">
-                        <img :src="userData.avatar" />
+                        <img :src="shareData.avatar" />
                     </div>
                     <div class="user-name">
                         <span>我是</span>
-                        <span class="name">{{userData.realname}}</span>
+                        <span class="name">{{shareData.realname}}</span>
                     </div>
                 </div>
                 <div class="code-wrap">
@@ -48,56 +48,34 @@ export default {
     },
     data(){
         return{
-            userData:{}, //用户信息
+            shareData:{}, //推广信息
             codeUrl:'', // 二维码链接
             linkUrl:'', // 邀请链接
         }
     },
     created(){
         this.$store.commit('showLoading');
-        this.getUserData();
+        this.reqShareData();
     },
     methods:{
         /**
-         * 获取用户数据
+         * 获取推广信息
          */
-        getUserData(){
-            let url = 'user/personal';
+        reqShareData(){
+            let url = '/user/ewm';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.userData = res.data.data;
-                    this.linkUrl = this.globalUrl + '/Register' + this.userData.url;
-                    this.getQrCode(); //获取二维码
-                    console.log(res)
-                }else{
-                    this.$toast(res.data.msg)
-                }
-            }).catch((error) => {
-                this.$toast(error)
-            })
-        },
-        
-        /**
-         * 获取二维码
-         */
-        getQrCode(){
-            let url = 'user/ewm';
-            let jumpUrl = 'Register?'+'uid='+ this.userData.id;
-            this.$axios.post(url,{
-                token:this.$store.getters.optuser.Authorization,
-                url:jumpUrl
-            }).then((res) => {
-                if(res.data.status == 200){
-                    this.codeUrl = res.data.data.url;
-                    console.log(jumpUrl)
+                    this.shareData = res.data.data;
+                    this.codeUrl = this.shareData.img_url;
+                    this.linkUrl = this.globalUrl + '/Register' + this.shareData.url;
                 }else{
                     this.$toast(res.data.msg)
                 }
                 this.$store.commit('hideLoading')
             }).catch((error) => {
-                this.$toast(error)
+                alert('请求失败:' + error)
             })
         },
 

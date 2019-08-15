@@ -9,32 +9,32 @@
                 <div class="receipt-info">
                     <div class="list-item">
                         <div class="sub-title">收款人:</div>
-                        <div class="text">{{receiptData.title}}</div>
+                        <div class="text">{{receiptData.username}}</div>
                     </div>
                     <div class="list-item">
                         <div class="sub-title">电话:</div>
-                        <div class="text">{{receiptData.name}}</div>
+                        <div class="text">{{receiptData.iphone}}</div>
                     </div>
                     <div class="list-item">
                         <div class="sub-title">账号:</div>
-                        <div class="text">{{receiptData.value}}</div>
+                        <div class="text">{{receiptData.bank_card}}</div>
                     </div>
                     <div class="list-item">
                         <div class="sub-title">银行:</div>
-                        <div class="text">{{receiptData.remark}}</div>
+                        <div class="text">{{receiptData.bank_name}}</div>
                     </div>
                 </div>
 
                 <div class="code-list">
                     <div class="code-item weChat">
                         <div class="code">
-                            <img src="/static/images/user/payment-code.png" />
+                            <img :src="this.globalUrl + '/public/upload/images/' + receiptData.wx_code" />
                         </div>
                         <p class="sub-title">微信收款二维码</p>
                     </div>
                     <div class="code-item alipay">
                         <div class="code">
-                            <img src="/static/images/user/payment-code.png" />
+                            <img :src="this.globalUrl + '/public/upload/images/' + receiptData.zfb_code" />
                         </div>
                         <p class="sub-title">支付宝收款二维码</p>
                     </div>
@@ -72,13 +72,13 @@
         * 请求收款信息数据
         */
        reqData(){
-           let url = '/user/bank_card';
+           let url = 'pay/investment';
            this.$axios.post(url,{
                token:this.$store.getters.optuser.Authorization,
            }).then((res) => {
                if(res.data.status == 200){
-                   console.log(res)
-                   this.receiptData = res.data.data;
+                   this.receiptData = res.data.data.info;
+                   console.log(this.receiptData)
                }else{
                    this.$toast(res.data.msg) 
                }

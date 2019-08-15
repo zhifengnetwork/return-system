@@ -84,7 +84,7 @@
                     </div>
                     <div class="more">{{userData.mobile}}</div>
                 </div>
-                <router-link to="/user/InviteLink">
+                <!-- <router-link to="/user/InviteLink">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/link-icon.png" /></span>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="more"></div>
                     </div>
-                </router-link>
+                </router-link> -->
                 <router-link to="/user/mySharing">
                     <div class="link-item">
                         <div class="fl">

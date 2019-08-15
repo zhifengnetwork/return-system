@@ -83,7 +83,7 @@ export default {
             alipay:'', //支付宝账号
             alipayName:'', //真实姓名
             money:'', //提现金额
-            rate:0.006, //费率
+            rate:'', //费率
             fee:0, //手续费
         }
     },
@@ -109,7 +109,8 @@ export default {
                 token:this.$store.getters.optuser.Authorization
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.accountData = res.data.data
+                    this.accountData = res.data.data;
+                    this.rate = this.accountData.rate;
                 }else{
                     this.$toast(res.data.msg)
                 }

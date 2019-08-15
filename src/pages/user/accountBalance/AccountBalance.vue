@@ -69,7 +69,8 @@ export default {
                 token:this.$store.getters.optuser.Authorization
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.accountData = res.data.data
+                    this.accountData = res.data.data;
+                    console.log(res)
                 }else{
                     this.$toast(res.data.msg)
                 }

@@ -25,10 +25,10 @@
 
 		<!-- 菜单导航 -->
 		<div class="nav-wrap">
-			<router-link to="#" class="nav-item" tag="div">
+			<router-link to="/Purchase" class="nav-item" tag="div">
 				<img src="/static/images/home/nav-investment.png" />
 			</router-link>
-			<router-link to="/user/CommissionList" class="nav-item" tag="div">
+			<router-link to="/user/MyBenefits" class="nav-item" tag="div">
 				<img src="/static/images/home/nav-profit.png" />
 			</router-link>
 			<router-link to="/user/TeamList" class="nav-item" tag="div">
@@ -93,7 +93,7 @@ export default {
 				}
             })
             .catch((error) => {
-                this.$toast(error)
+				alert('请求错误:'+ error)
             })
 		},
 
