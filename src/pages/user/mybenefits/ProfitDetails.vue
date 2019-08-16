@@ -6,28 +6,24 @@
         </TopHeader>
 
         <div class="content">
-            <!-- 无数据 -->
-            <div class="none" v-show="isShow">
-                <img src="/static/images/public/none.png"/>
-                <p>暂无信息</p>
-            </div>
-
-            <div class="revenue-list" v-for="(item,index) in list" :key="index">
-                <div class="single-item">
-                    <div class="img-wrap">
-                        <img :src="item.avatar" />
-                    </div>
-                    <div class="main">
-                        <div class="user-info row-line">
-                            <span class="user-name info-left">ID:{{item.to_user_id}}</span>
-                            <p class="info-right">数量：{{item.num}}</p>
-                        </div>
-                        <div class="row-line">
-                            <span class="date info-left">{{item.create_time | formatDate}}</span>
-                            <span class="profit info-right">{{type ==4 ? '奖励' : '利润'}}:￥{{item.money}}</span>
-                        </div>
+            <div class="details-container">
+                <div class="thead">
+                    <span>日期</span>
+                    <span>金额</span>
+                </div>
+                <div class="record-list" v-if="profitList.length > 0">
+                    <div class="record-item" v-for="(item,index) in this.profitList">
+                        <div class="column">{{item.createtime | formatDate}}</div>
+                        <div class="column">{{item.amplify_amount_day}}</div>
                     </div>
                 </div>
+
+                <!-- 无数据 -->
+                <div class="none" v-else>
+                    <img src="/static/images/public/none.png"/>
+                    <p>暂无相关数据</p>
+                </div>
+
             </div>
         </div>
    </div>
@@ -39,47 +35,55 @@ export default {
     name:'ProfitDetails',
     data() {
         return {
-            list: [],
-            isShow:false,
-            type:this.$route.query.type,
-            name:this.$route.query.name,
-            token:this.$store.getters.optuser.Authorization
+            type:'',
+            name:'',
+            profitList:[]
         };
     },
     components: {
 		TopHeader,
     },
     created(){
-        this.$store.commit('showLoading')       //加载loading
-        this.getData()
+        this.type = this.$route.query.type,
+        this.name = this.$route.query.name,
+        this.$store.commit('showLoading');  
+        this.reqUser();    
     },
     methods:{
-        getData(){
-            var _that=this
-            _that.$axios.post('user/profit_edit',{
-                'token':_that.token,
-                'type':_that.type
+        reqUser() {
+            let url = 'user/user_info'
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization
             })
-            .then((res)=>{
-                var info =res.data
-                if(info.status == 200){
-                    if(info.data.length<1){
-                        this.isShow=true
-                    }
-                    _that.list =info.data
-                    // console.log(_that.swipeData)
-                    _that.$store.commit('hideLoading')
+            .then((res)=>{   
+                this.$store.commit('hideLoading')
+                if(res.data.status === 200){
+                    this.userData = res.data.data;
+                    this.getData();
                 }
-                else if(res.data.status == 999){
-                    _that.$store.commit('del_token'); //清除token
+                else if(res.data.status === 999){
+                    this.$store.commit('del_token'); //清除token;
                     setTimeout(()=>{
-                        _that.$router.push('/Login')
+                        this.$router.push('/Login')
                     },1000)
                 }
                 else{
-                    _that.$toast(info.msg)
+                    this.$toast(res.data.msg)
                 }
             })
+        },
+        getData(){
+           let url = 'user/record_details';
+           this.$axios.post(url,{
+                user_id:this.userData.id,  
+                type:this.type,
+                name:this.name,
+                token:this.$store.getters.optuser.Authorization
+           }).then((res) => {
+               this.profitList = res.data.data;
+               console.log(this.profitList)
+               this.$store.commit('hideLoading');  
+           })
         }
     },
     filters: {
@@ -112,57 +116,38 @@ export default {
 
 <style lang="stylus" scoped>
 .ProfitDetails
-    .revenue-list
-        margin-top 20px
-        padding 0 24px
-        box-sizing border-box
-        display flex
-        flex-wrap wrap
-        .single-item
-            width 100%
-            height 160px
-            color #151515
-            font-size 24px
-            background-color #fff
-            border-radius 10px
-            margin-bottom 18px
-            box-sizing border-box
+    .details-container
+        .thead  
+            height 50px
+            font-size 26px
             display flex
             align-items center
-            .img-wrap
+            justify-content space-between
+            background-color #ffc9b4
+            span 
+                width 40%
+                text-align center
+                display block 
+        .record-item
+            width 100%
+            height 70px
+            display flex
+            justify-content space-between
+            align-items center
+            background-color #fff4f0
+            .column
+                width 40%
+                text-align center
+                font-size 20px
+            &:nth-child(even)
+                background-color #ffede7
+        .none
+            text-align center
+            margin 150px auto
+            img
                 width 80px
-                height 80px
-                margin-right 20px
-                border-radius 50%
-                border 1px solid #7d7d7d
-                img 
-                    width 100%
-                    height 100%
-                    border-radius 50%
-            .main
-                flex 1
-                .user-info
-                    font-size 28px
-                    margin-bottom 10px
-                    .user-name
-                        margin-right 20px
-                .row-line
-                    display flex
-                    justify-content space-between
-                    .info-left
-                        display block
-                        width 46%
-                    .info-right
-                        margin-left 2%
-                        width 52%
-                        text-align right 
-    .none
-        text-align center
-        margin-top 35%
-        font-size 28px
-        img
-            width 80px
-        p
-            margin 20px auto
+            p
+                margin 10px auto
+                font-size 24px
            
 </style>

@@ -53,10 +53,11 @@ export default {
     },
     data(){
         return{
-            accountData:[]
+            accountData:{}
         }
     },
     created(){
+        this.$store.commit('showLoading');
         this.reqAccount();
     },
     methods:{
@@ -70,7 +71,7 @@ export default {
             }).then((res) => {
                 if(res.data.status == 200){
                     this.accountData = res.data.data;
-                    console.log(res)
+                    this.$store.commit('hideLoading');
                 }else{
                     this.$toast(res.data.msg)
                 }

@@ -12,18 +12,20 @@
                     <span>收款ID/手机号</span>
                     <span>金额</span>
                 </div>
-                <div class="record-list">
-                    <div class="record-item">
-                        <div class="column">2019-06-03</div>
-                        <div class="column">28015/17875592633</div>
-                        <div class="column">￥484.00</div>
-                    </div>
-                     <div class="record-item">
-                        <div class="column">2019-06-03</div>
-                        <div class="column">28015/17875592633</div>
-                        <div class="column">￥484.00</div>
+                <div class="record-list" v-if="transfercordData.length > 0">
+                    <div class="record-item" v-for="(item,index) in transfercordData" :key="index">
+                        <div class="column">{{item.create_time | formatDate}}</div>
+                        <div class="column">{{item.id}}/{{item.account_id}}</div>
+                        <div class="column">￥{{item.balance}}</div>
                     </div>
                 </div>
+
+                <!-- 无数据 -->
+                <div class="none" v-else>
+                    <img src="/static/images/public/none.png"/>
+                    <p>暂无相关数据</p>
+                </div>
+
             </div>
         </div>
 
@@ -39,18 +41,79 @@ export default {
     },
     data(){
         return{
-           
+           user_id:'',
+           transfercordData:[]
         }
     },
     created(){
-        this.requestData();
+        this.$store.commit('showLoading');
+        this.getTransferData();
     },
     methods:{
+        reqUser() {
+            let url = 'user/user_info'
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization
+            })
+            .then((res)=>{   
+                this.$store.commit('hideLoading')
+                if(res.data.status === 200){
+                    this.user_id = res.data.data.id;
+                    this.getRecordData();
+                }
+                else if(res.data.status === 999){
+                    this.$store.commit('del_token'); //清除token;
+                    setTimeout(()=>{
+                        this.$router.push('/Login')
+                    },1000)
+                }
+                else{
+                    this.$toast(res.data.msg)
+                }
+            })
+        },
+
         /**
-         * 请求数据
+         * 获取转账记录
          */
-        requestData(){
-            
+        getTransferData(){
+            let url = 'balance/transfer_list';
+            this.$axios.post(url,{
+                user_id:this.user_id,
+                token:this.$store.getters.optuser.Authorization
+            }).then((res) => {
+                if(res.status == 200){
+                    this.transfercordData = res.data;
+                }
+                this.$store.commit('hideLoading')
+            }).catch((error) => {
+                alert("请求失败：" + error)
+            })
+        }
+    },
+
+    filters: {
+        // 日期格式化
+        formatDate: function (time) {
+            let date = new Date(time*1000);
+            let y = date.getFullYear();
+
+            let MM = date.getMonth() + 1;
+            MM = MM < 10 ? ('0' + MM) : MM;
+
+            let d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+
+            let h = date.getHours();
+            h = h < 10 ? ('0' + h) : h;
+
+            let m = date.getMinutes();
+            m = m < 10 ? ('0' + m) : m;
+
+            let s = date.getSeconds();
+            s = s < 10 ? ('0' + s) : s;
+
+            return y + '-' + MM + '-' + d ;
         }
     }
 }
@@ -94,5 +157,13 @@ export default {
                 width 30%
             &:nth-child(even)
                 background-color #ffede7
+        .none
+            text-align center
+            margin 150px auto
+            img
+                width 80px
+            p
+                margin 10px auto
+                font-size 24px
 
 </style>

@@ -38,7 +38,7 @@
                 </div>
                 <div class="module-item">
                     <router-link to="/user/CommissionList">
-                        <p class="number">500</p>
+                        <p class="number">{{userData.distribut_money}}</p>
                         <p class="sub-title">
                             <span class="text">佣金</span>
                             <i class="right-arrow"></i>

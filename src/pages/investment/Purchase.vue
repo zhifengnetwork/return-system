@@ -104,8 +104,15 @@ export default {
                 if(res.data.status == 200){
                     this.scale = (res.data.data.bili[1]) / res.data.data.bili[0];
                     this.receiptData = res.data.data.info;
-                    console.log(this.receiptData)
-                }else{
+                    // console.log(this.receiptData)
+                }
+                else if(res.data.status == 999){
+                    this.$store.commit('del_token'); 
+                    setTimeout(() => {
+                        this.$router.push("/Login");
+                    }, 1000);
+                }
+                else{
                     this.$toast(res.data.msg)
                 }
             }).catch((error) => {
@@ -117,20 +124,21 @@ export default {
          * 校验输入框的值
          */
         validateVal(){
-            if(this.currencyVal < 600){
+            if(this.currencyVal == ''){
+                this.$toast('投资币的值不可为空');
+                return
+            }
+            else if(this.currencyVal < 600){
                 this.$toast('投资币不可低于600');
-                this.currencyVal = '';
                 return 
             }
             else if(this.currencyVal % 600 != 0){
                 this.$toast('投资币必须是600的倍数');
-                this.currencyVal = '';
                 return 
             }
             else{
                 return true
             }
-            
         },
 
         /**
@@ -163,25 +171,40 @@ export default {
          * 提交
          */
         submitClick(){
-            // console.log(this.fileList[0])
             let fileObj = this.fileList[0];
-            if(this.currencyVal == ''){
-                this.$toast('投资币的值不可为空');
+
+            if(this.validateVal()){
+                if(fileObj == '' || typeof(fileObj) == 'undefined'){
+                    return this.$toast('亲,还没有选择上传的凭证哦!')
+                }else{
+                    fileObj = this.fileList[0].content;
+                }
+
+                let url = 'pay/investmentsub';
+                this.$axios.post(url,{
+                    token:this.$store.getters.optuser.Authorization,
+                    currency:this.currencyVal,
+                    image:fileObj
+                }).then((res) => {
+                    if(res.data.status == 200){
+                        this.$toast({message:res.data.msg,duration:2000})
+                        setTimeout(() => {
+                            this.$router.push('/Home')
+                        },2000)
+                    }else if(res.data.status == 999){
+                        this.$store.commit('del_token'); //清除token
+                        setTimeout(()=>{
+                            this.$router.push('/Login')
+                        },1000)
+                    }
+                    else{
+                        this.$toast(res.data.msg)
+                    }
+                }).catch((error) => {
+                    alert('请求错误:' + error)
+                })
             }
-            else if(fileObj == '' || typeof(fileObj) == 'undefined'){
-                return this.$toast('亲,还没有选择上传的凭证哦!')
-            }else{
-                fileObj = this.fileList[0].content
-            }
-
-            let url = '';
-            this.$axios.post(url,{
-
-            }).then((res) => {
-
-            }).catch((error) => {
-                alert('请求错误:' + error)
-            })
+            
         }
     },
    

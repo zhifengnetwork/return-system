@@ -10,11 +10,11 @@
                 <i class="icon tel-icon"></i>
                 <input type="number" placeholder="请输入手机号" v-model="phone">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <i class="icon verify-icon"></i>
                 <input type="text" placeholder="请输入验证码" v-model="verifyCode">
                 <button class="verifyCode" :disabled="disabled" @click="getVerifyCode()">{{verifyText}}</button>
-            </div>
+            </div> -->
             <div class="form-group">
                 <i class="icon password-icon"></i>
                 <input type="password" placeholder="请输入密码" v-model="password" >

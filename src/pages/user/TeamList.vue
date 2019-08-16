@@ -7,8 +7,8 @@
 
         <div class="content">
             <div class="tab-title">
-                <span @click="handleTitle(1)" :class="[isActive ? 'active' : '']">直推会员(8)</span>
-                <span @click="handleTitle(2)" :class="[isActive ? '' : 'active']">其他会员(12)</span>
+                <span @click="handleTitle(1)" :class="[isActive ? 'active' : '']">直推会员({{directNumber}})</span>
+                <span @click="handleTitle(2)" :class="[isActive ? '' : 'active']">其他会员({{otherNumber}})</span>
             </div>
             <div class="tab-container">
                 <div class="thead">
@@ -75,7 +75,9 @@ export default {
                 type:this.type
             }).then((res) => {
                 if(res.data.status == 200){
-                    this.teamList = res.data.data
+                    this.teamList = res.data.data.list;
+                    this.directNumber = res.data.data.num[0];
+                    this.otherNumber = res.data.data.num[1];
                 }else{
                     this.$toast(res.data.msg)
                 }

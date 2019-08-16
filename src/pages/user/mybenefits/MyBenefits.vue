@@ -7,12 +7,19 @@
 
         <div class="content">
             <div class="revenue-list">
-                <div class="card-item" v-for="(item,index) in list" :key="index">
+                <!-- <div class="card-item" v-for="(item,index) in list" :key="index">
                     <router-link :to="'/user/ProfitDetails?type='+item.type+'&name='+item.name">
                         <p class="title">{{item.name}}</p>
                         <p class="money">￥{{item.money}}</p>
                     </router-link>
-                </div>    
+                </div>  -->                
+                <div class="card-item" v-for="(item,index) in profitData" :key="index">
+                    <router-link :to="'/user/ProfitDetails?type=' + item.type +'&name='+item.name">
+                        <div class="title">{{item.name}}</div>
+                        <div class="money">{{item.money}}</div>
+                    </router-link> 
+                </div>  
+                 
             </div>
             
         </div>
@@ -28,31 +35,53 @@ export default {
     },
     data() {
         return {
-            list:[],
-            token:this.$store.getters.optuser.Authorization
+            profitData:{}
         };
     },
     created(){
         this.$store.commit('showLoading')
-        this.getData()
+        this.reqUser();
     },
     methods:{
+        reqUser() {
+            let url = 'user/user_info'
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization
+            })
+            .then((res)=>{   
+                this.$store.commit('hideLoading')
+                if(res.data.status === 200){
+                    this.userData = res.data.data;
+                    this.getData();
+                }
+                else if(res.data.status === 999){
+                    this.$store.commit('del_token'); //清除token;
+                    setTimeout(()=>{
+                        this.$router.push('/Login')
+                    },1000)
+                }
+                else{
+                    this.$toast(res.data.msg)
+                }
+            })
+        },
+
         getData(){
-           var url ='user/my_profit',
-                that =this
-            that.$axios.post(url,{         // 传给后台的参数
-                'token':that.token
+            let url ='user/record_rebate';
+            this.$axios.post(url,{   
+                user_id:this.userData.id,      
+                token:this.$store.getters.optuser.Authorization,
             })
             .then((res)=>{
-                var info =res.data
-                if(info.status==200){
-                    that.list = info.data
-                    that.$store.commit('hideLoading')
+                if(res.status == 200){
+                    this.profitData = res.data.data;
+                    console.log(this.profitData)
+                    this.$store.commit('hideLoading')
                 }
                 else if(res.data.status == 999){
-                    that.$store.commit('del_token'); //清除token
+                    this.$store.commit('del_token'); //清除token
                 }else{
-                    that.$toast(res.data.msg)
+                    this.$toast(res.data.msg)
                 }
             })
         },
@@ -67,39 +96,48 @@ export default {
         margin-top 20px
         padding 0 24px
         box-sizing border-box
-        display flex
-        flex-wrap wrap
         .card-item
-            width 49%
-            height 340px
-            color #ffffff
-            font-size 30px
+            width 100%
+            height 260px
             border-radius 10px
-            margin-right 2%
-            margin-bottom 2%
-            a   
+            margin-bottom 30px
+            position relative
+            
+            &:nth-child(1)
+                background url("/static/images/user/profit-item-bg-1.png") no-repeat
+                background-size 100%
+                .title
+                    background-color #b65e29
+            &:nth-child(2)
+                background url("/static/images/user/profit-item-bg-2.png") no-repeat
+                background-size 100%
+                .title
+                    background-color #c73d75
+            &:nth-child(3)
+                background url("/static/images/user/profit-item-bg-3.png") no-repeat
+                background-size 100%
+                .title
+                     background-color #bc8c2f
+            a
                 width 100%
                 height 100%
-                color #ffffff
-                display block
                 display flex
-                flex-direction column
                 justify-content center
                 align-items center
-            &:nth-child(1)
-                background url("/static/images/user/revenue-bg-1.png") no-repeat
-                background-size 100%
-            &:nth-child(2)
-                background url("/static/images/user/revenue-bg-2.png") no-repeat
-                background-size 100%
-            &:nth-child(3)
-                background url("/static/images/user/revenue-bg-3.png") no-repeat
-                background-size 100%
-            &:nth-child(4)
-                background url("/static/images/user/revenue-bg-4.png") no-repeat
-                background-size 100%
-            &:nth-child(2n)
-                margin-right 0
             .title
-                margin-bottom 15px
+                width 160px
+                height 50px
+                font-size 30px
+                color #ffffff
+                text-align center
+                line-height 50px
+                border-radius 24px
+                background-color #b65e29
+                position absolute
+                top 22px
+                left 25px
+            .money
+                color #571607
+                font-size 40px
+  
 </style>

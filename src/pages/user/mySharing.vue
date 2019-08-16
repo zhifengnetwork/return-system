@@ -70,6 +70,7 @@ export default {
                     this.shareData = res.data.data;
                     this.codeUrl = this.shareData.img_url;
                     this.linkUrl = this.globalUrl + '/Register' + this.shareData.url;
+                    console.log(res)
                 }else{
                     this.$toast(res.data.msg)
                 }

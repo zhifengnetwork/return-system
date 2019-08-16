@@ -80,6 +80,7 @@ export default {
             this.$axios.post(url)
             .then( (res) => {
                 if(res.data.status === 200){
+					console.log(res)
 					this.bannerData = res.data.data.banners;
 					this.noticeData = res.data.data.announce;
 					this.$store.commit('hideLoading');

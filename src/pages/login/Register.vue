@@ -6,11 +6,11 @@
                 <i class="icon tel-icon"></i>
                 <input type="number" placeholder="输入手机号" v-model="phone">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <i class="icon verify-icon"></i>
                 <input type="text" placeholder="输入验证码" v-model="verifyCode">
                 <button class="verifyCode" :disabled="disabled" @click="getVerifyCode()">{{verifyText}}</button>
-            </div>
+            </div> -->
             <div class="form-group">
                 <i class="icon password-icon"></i>
                 <input type="password" placeholder="输入密码" v-model="password">
@@ -140,7 +140,7 @@ export default {
          */
         registerClick(){
             var uid =""
-            if('undefined' !=typeof(this.uid)){
+            if('undefined' != typeof(this.uid)){
                 uid =new Number(this.uid)
             }
             if(this.phone == ''){
@@ -149,10 +149,12 @@ export default {
             }else if(!/^1[3456789]\d{9}$/.test(this.phone)){
                 this.$toast('请填写正确的手机号码')
                 return false
-            }else if(this.verifyCode == ''){
-                this.$toast('验证码不能为空')
-                return false
-            }else if(this.password == ''){
+            }
+            // else if(this.verifyCode == ''){
+            //     this.$toast('验证码不能为空')
+            //     return false
+            // }
+            else if(this.password == ''){
                 this.$toast('密码不能为空')
                 return false
             }else if(!/^[a-z0-9_-]{6,18}$/.test(this.password)){
@@ -172,7 +174,7 @@ export default {
                 // 请求数据
                 this.$axios.post('user/register',{
                     phone:this.phone,
-                    verify_code:this.verifyCode,
+                    // verify_code:this.verifyCode,
                     user_password:this.password,
                     confirm_password:this.password2,
                     uid:uid
