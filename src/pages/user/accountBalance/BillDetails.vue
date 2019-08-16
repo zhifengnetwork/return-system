@@ -19,15 +19,18 @@
                     <span>订单</span>
                     <span>日期</span>
                     <span>金额</span>
+                    <span>描述</span>
                 </div>
                 <div class="record-list" v-if="billData.length > 0">
                     <div class="record-item" v-for="(item,index) in billData" :key="index">
                         <div class="column">
-                            <p>{{item.source_id}}</p>
-                            <p>{{item.note}}</p>
+                            {{item.source_id}}
+                            <!-- <p>{{item.source_id}}</p>
+                            <p>{{item.note}}</p> -->
                         </div>
                         <div class="column">{{item.create_time}}</div>
                         <div class="column">{{item.balance}}</div>
+                        <div class="column">{{item.note}}</div>
                     </div>
                     <!-- <div class="record-item">
                         <div class="column">
@@ -153,8 +156,10 @@ export default {
             span:nth-child(1)
                 width 30%
             span:nth-child(2)
-                width 40%
+                width 20%
             span:nth-child(3)
+                width 20%
+            span:nth-child(4)
                 width 30%
         .record-item
             width 100%
@@ -171,8 +176,10 @@ export default {
                 padding-left 20px
                 box-sizing border-box
             .column:nth-child(2)
-                width 40%
+                width 20%
             .column:nth-child(3)
+                width 20%
+            .column:nth-child(4)
                 width 30%
             &:nth-child(even)
                 background-color #ffede7

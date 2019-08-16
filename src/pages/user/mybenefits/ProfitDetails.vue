@@ -10,16 +10,18 @@
                 <div class="thead">
                     <span>日期</span>
                     <span>金额</span>
+                    <span>描述</span>
                 </div>
-                <div class="record-list" v-if="profitList.length > 0">
+                <div class="record-list">
                     <div class="record-item" v-for="(item,index) in this.profitList">
                         <div class="column">{{item.createtime | formatDate}}</div>
                         <div class="column">{{item.amplify_amount_day}}</div>
+                        <div class="column">描述</div>
                     </div>
                 </div>
 
                 <!-- 无数据 -->
-                <div class="none" v-else>
+                <div class="none" v-show="profitList.length == 0">
                     <img src="/static/images/public/none.png"/>
                     <p>暂无相关数据</p>
                 </div>
@@ -125,7 +127,7 @@ export default {
             justify-content space-between
             background-color #ffc9b4
             span 
-                width 40%
+                flex 1
                 text-align center
                 display block 
         .record-item
@@ -136,7 +138,7 @@ export default {
             align-items center
             background-color #fff4f0
             .column
-                width 40%
+                flex 1
                 text-align center
                 font-size 20px
             &:nth-child(even)

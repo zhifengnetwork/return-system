@@ -58,7 +58,6 @@ export default {
                 token:this.$store.getters.optuser.Authorization
             })
             .then((res)=>{   
-                this.$store.commit('hideLoading')
                 if(res.data.status === 200){
                     this.user_id = res.data.data.id;
                     this.getRecordData();
