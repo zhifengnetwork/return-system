@@ -57,8 +57,11 @@ import ViewOrders from '@/pages/user/ViewOrders'
 // 佣金明细
 import CommissionList from '@/pages/user/CommissionList'
 
-// 我的分享
+// 我的推广
 import MySharing from '@/pages/user/MySharing'
+
+// 联系客服
+import CustomerService from '@/pages/user/CustomerService'
 
 // 修改用户名
 import EditUserName from '@/pages/user/EditUserName'
@@ -226,6 +229,13 @@ const router= new Router({
 			component:() => import('@/pages/user/accountBalance/EditAlipay'),
 			meta:{requireAuth:true}
 		},
+		// 银行卡编辑
+		{
+			path: '/user/EditBankCard',
+			name: 'EditBankCard',
+			component:() => import('@/pages/user/accountBalance/EditBankCard'),
+			meta:{requireAuth:true}
+		},
 
 		// 赠送
 		{
@@ -278,13 +288,22 @@ const router= new Router({
 		},
 		
 	
-		// 我的分享
+		// 我的推广
 		{
 			path: '/user/MySharing',
 			name: 'mySharing',
 			component:() => import('@/pages/user/MySharing'),
 			meta:{requireAuth:true}
 		},
+
+		// 联系客服
+		{
+			path: '/user/CustomerService',
+			name: 'CustomerService',
+			component:() => import('@/pages/user/CustomerService'),
+			meta:{requireAuth:true}
+		},
+		
 
 		/**
 		 * 地址管理

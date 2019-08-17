@@ -85,9 +85,9 @@ export default {
             }).then((res) => {
                 if(res.status == 200){
                     this.recordData = res.data;
+                    this.$store.commit('hideLoading')
                     console.log(this.recordData)
                 }
-               this.$store.commit('hideLoading')
             }).catch((error) => {
                 alert("请求失败：" + error)
             })
@@ -124,8 +124,10 @@ export default {
 
 <style lang="stylus" scoped>
 .Investment
+    height 100%
     .content
-        padding 0 24px 98px
+        height calc(100% - 98px) 
+        padding 0 24px
         box-sizing border-box
         position relative
         .investment-list
@@ -149,7 +151,12 @@ export default {
                         margin-right 15px
         .none
             text-align center
-            margin 450px auto
+            margin 0px auto
+            position absolute
+            left 50%
+            top 50%
+            z-index 3
+            transform translate(-50%,-50%)
             img
                 width 80px
             p

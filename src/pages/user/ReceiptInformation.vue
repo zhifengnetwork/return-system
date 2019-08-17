@@ -28,13 +28,13 @@
                 <div class="code-list">
                     <div class="code-item weChat">
                         <div class="code">
-                            <img :src="this.globalUrl + '/public/upload/images/' + receiptData.wx_code" />
+                            <img :src="receiptData.wx_code" />
                         </div>
                         <p class="sub-title">微信收款二维码</p>
                     </div>
                     <div class="code-item alipay">
                         <div class="code">
-                            <img :src="this.globalUrl + '/public/upload/images/' + receiptData.zfb_code" />
+                            <img :src="receiptData.zfb_code" />
                         </div>
                         <p class="sub-title">支付宝收款二维码</p>
                     </div>

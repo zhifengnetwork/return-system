@@ -21,17 +21,41 @@
                      @click="selectType(index,item.type)">
                         <img :src="item.icon" />
                     </div>
+                    <!-- <router-link to="/user/EditBankCard" class="add-card" tag="div"><i class="icon"></i>添加银行卡</router-link> -->
                 </div>
                 <!-- 账号信息 -->
                 <router-link to="/user/EditAlipay">
                     <div class="account-wrap" v-show="nowIndex == 0">
                         <div class="account-msg">
-                            <span class="name">{{this.alipay}}</span>
+                            <span class="name">{{this.alipay ? this.alipay:'请添加支付宝账号'}}</span>
                             <span class="account-number">{{this.alipayName}}</span>
                         </div>
                         <div class="edit-btn"></div>  
                     </div>
                 </router-link>
+
+                <!-- 银行卡信息 -->
+                <!-- <div class="account-wrap" v-show="nowIndex == 1">
+                    <div class="account-msg">
+                        <span class="name">银行</span>
+                        <span class="account-number">6222</span>
+                    </div>
+                    <div class="right-arrow"></div>  
+                </div> -->
+                
+                <!-- 银行卡上拉菜单 -->
+                <!-- <div class="bankPopup">
+                    <van-popup v-model="showBank">
+                        <van-radio-group>
+                            <van-cell-group>
+                                <van-cell v-for="(item,index) in bankList" :key="index" :title="item.name" clickable @click="selectBank(item)">
+                                    <van-radio :name="item.name"/>
+                                </van-cell>
+                            </van-cell-group>    
+                        </van-radio-group>
+                    </van-popup>
+                </div> -->
+
             </div>
 
             <!-- 提现金额 -->
@@ -78,7 +102,7 @@ export default {
             // 提现方式
             wayArr:[
                 {type:3,icon:'/static/images/user/alipay-icon.png'},
-                // {type:2,icon:'/static/images/user/weChat-icon.png'},
+                // {type:2,icon:'/static/images/user/bank-card.png'},
             ],
             alipay:'', //支付宝账号
             alipayName:'', //真实姓名
@@ -238,6 +262,22 @@ export default {
                     &.on
                         width 70px
                         height 70px
+                .add-card
+                    height 50px
+                    font-size 24px
+                    border 2px solid #ccc
+                    border-radius 6px
+                    padding 0 15px
+                    box-sizing border-box
+                    display flex
+                    align-items center
+                    .icon
+                        width 22px
+                        height 22px
+                        display inline-block
+                        background url("/static/images/user/add-card.png") no-repeat center center
+                        background-size 100%
+                        margin-right 10px
             .account-wrap
                 height 70px
                 display flex
@@ -254,6 +294,12 @@ export default {
                     height 25px
                     background url("/static/images/user/edit-icon.png") no-repeat center center
                     background-size 25px 25px
+                    padding 10px 
+                .right-arrow
+                    width 8px
+                    height 14px
+                    background url("/static/images/user/right-arrow2.png") no-repeat center center
+                    background-size 8px 14px
                     padding 10px 
         .withdrawal-money
             h3

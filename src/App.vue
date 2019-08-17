@@ -23,12 +23,11 @@ export default {
 </script>
 
 <style lang="stylus">
-body
-	background-color #f2f2f2
-	color #151515
+	html,body,#app
+		width 100%
+		height 100%
+		background-color #f2f2f2
 	.height-88
 		width 100%
 		height 88px
-
-
 </style>

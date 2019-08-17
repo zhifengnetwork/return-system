@@ -7,21 +7,53 @@
 
         <div class="content">
             <div class="module-box">
-                <div class="text-container">
-                    <div class="row-line">
-                        <div class="sub-title">当前投资币：</div>
-                        <div class="text">
-                            <input type="number" placeholder="请输入投资币" v-model="currencyVal" @blur.prevent="validateVal()" ref="currencyVal">
-                        </div>
-                    </div>
-                    <div class="row-line">
-                        <div class="sub-title">当前投资金额：</div>
-                        <div class="text">{{calcAmount}}</div>
+                <div class="row-line">
+                    <div class="sub-title">当前投资币：</div>
+                    <div class="text">
+                        <input type="number" placeholder="请输入投资币" v-model="currencyVal" @blur.prevent="validateVal()" ref="currencyVal">
                     </div>
                 </div>
             </div>
 
             <div class="module-box">
+                <div class="row-line">
+                    <div class="sub-title">当前投资金额：</div>
+                    <div class="text">{{calcAmount}}</div>
+                </div>
+            </div>
+
+            <div class="module-box">
+                <div class="row-line">
+                    <div class="sub-title">商家ID:</div>
+                    <div class="text">
+                        <input type="number" placeholder="请输入商家id" v-model="otc_id">
+                    </div>
+                </div>
+            </div>
+
+            <div class="address-links">
+                <div class="link-item" v-for="(item,index) in linkArr" :key="index">
+                    <div class="sub-title">{{item.name}}:</div>
+                    <div class="text">{{item.url}}</div>
+                    <div class="copy-btn"
+                        v-clipboard:copy="item.url"
+                        v-clipboard:success="onCopy"
+                        v-clipboard:error="onError"
+                    >复制</div>
+                </div>
+                 <!-- <div class="link-item">
+                    <div class="sub-title">ETH:</div>
+                    <div class="text">baidu.com</div>
+                    <div class="copy-btn">复制</div>
+                </div>
+                <div class="link-item">
+                    <div class="sub-title">SDT:</div>
+                    <div class="text">baidu.com</div>
+                    <div class="copy-btn">复制</div>
+                </div> -->
+            </div>
+
+            <!-- <div class="module-box">
                 <div class="text-container">
                     <div class="row-line">
                         <div class="sub-title">收款人:</div>
@@ -40,7 +72,7 @@
                         <div class="text">{{receiptData.bank_name}}</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="module-box upload-wrap">
                 <div class="upload-content">
@@ -63,6 +95,7 @@
 
 <script>
 import TopHeader from "@/pages/common/header/TopHeader"
+import VueClipboard from 'vue-clipboard2'
 export default {
     name:'Purchase',
     components: {
@@ -74,7 +107,13 @@ export default {
             currencyVal:'',
             scale:'', //比例
             currentAmount:'', //当前投资金额
-            receiptData:[] //收款信息
+            otc_id:'', //商家id
+            receiptData:[], //收款信息
+            linkArr:[
+                {name:"BTC",url:"baidu.com"},
+                {name:"ETH",url:"baidu.com"},
+                {name:"SDT",url:"zhifengwangluo.com"},
+            ]
         }
     },
 
@@ -132,7 +171,7 @@ export default {
                 this.$toast('投资币不可低于600');
                 return 
             }
-            else if(this.currencyVal % 600 != 0){
+            else if(this.currencyVal % 600 !== 0){
                 this.$toast('投资币必须是600的倍数');
                 return 
             }
@@ -174,9 +213,13 @@ export default {
             let fileObj = this.fileList[0];
 
             if(this.validateVal()){
-                if(fileObj == '' || typeof(fileObj) == 'undefined'){
+                if(this.otc_id == ''){
+                    return this.$toast('商家id不能为空');
+                }
+                else if(fileObj == '' || typeof(fileObj) == 'undefined'){
                     return this.$toast('亲,还没有选择上传的凭证哦!')
-                }else{
+                }
+                else{
                     fileObj = this.fileList[0].content;
                 }
 
@@ -184,6 +227,7 @@ export default {
                 this.$axios.post(url,{
                     token:this.$store.getters.optuser.Authorization,
                     currency:this.currencyVal,
+                    otc_id:this.otc_id,
                     image:fileObj
                 }).then((res) => {
                     if(res.data.status == 200){
@@ -205,6 +249,17 @@ export default {
                 })
             }
             
+        },
+
+        // 复制成功回调
+        onCopy:function(e){
+            console.log(e)
+            this.$toast('复制成功');
+        },
+
+        // 复制失败回调
+        onError:function(){
+            this.$toast('复制失败');
         }
     },
    
@@ -214,7 +269,7 @@ export default {
 <style lang="stylus" scoped>
 .Purchase
     & /deep/ .TopHeader
-        background none 
+        background #f2f2f2 
         border none
     .content    
         padding 0 24px
@@ -228,18 +283,46 @@ export default {
             box-sizing border-box
             .text-container
                 margin-left 170px
-                .row-line
-                    font-size 28px
-                    height 60px
-                    display flex
-                    align-items center
-                    .sub-title
-                        margin-right 10px
-                    .text
-                        input 
-                            width 200px
-                            line-height 50px
-                            border-bottom 1px solid #1b1b1b
+            .row-line
+                font-size 28px
+                height 60px
+                display flex
+                align-items center
+                .sub-title
+                    margin-right 10px
+                .text
+                    flex 1
+                    input 
+                        width 200px
+                        line-height 50px
+        .address-links
+            width 100%
+            background-color #ffffff
+            border-radius 10px
+            margin-bottom 20px
+            .link-item
+                font-size 26px
+                height 70px
+                display flex
+                align-items center
+                border-bottom 1px solid #eee
+                padding 0 20px
+                box-sizing border-box
+                &:last-child
+                    border-bottom none
+                .sub-title
+                    margin-right 10px
+                .text
+                    flex 1
+                .copy-btn
+                    width 100px
+                    height 40px
+                    font-size 26px
+                    text-align center
+                    line-height 40px
+                    color #ffffff
+                    background-color #ff164d
+                    border-radius 10px
         .upload-wrap
             height 300px
             display flex
@@ -263,6 +346,7 @@ export default {
                     margin 0
                     background url("/static/images/investment/add-upload.png") no-repeat
                     background-size 109px 109px
+                    border none
                     .van-icon
                         display none
                 .van-uploader /deep/ .van-uploader__preview

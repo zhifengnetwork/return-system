@@ -48,7 +48,7 @@
                 <div class="module-item">
                     <router-link to="/user/TeamList">
                         <div class="link-item">
-                            <p class="number">148</p>
+                            <p class="number">{{userData.get_all_lower}}</p>
                             <p class="sub-title">
                                 <span class="text">团队</span>
                                 <i class="right-arrow"></i>
@@ -103,11 +103,11 @@
                     </div>
                 </router-link>
 
-                <router-link to="/user/Address">
+                <router-link to="/user/CustomerService">
                     <div class="link-item">
                          <div class="fl">
-                            <span class="icon"><img src="/static/images/user/address-icon.png" /></span>
-                            <span class="text">地址管理</span>
+                            <span class="icon"><img src="/static/images/user/kefu-icon.png" /></span>
+                            <span class="text">联系客服</span>
                         </div>
                         <div class="more"></div>
                     </div>
@@ -335,7 +335,7 @@
                     .more 
                         min-width 8px
                         min-height 14px
-                        background url(/static/images/user/leftArrow.png) no-repeat right center
+                        background url(/static/images/user/right-arrow2.png) no-repeat right center
                         background-size 8px 14px
                         padding-right 30px            
 

@@ -138,10 +138,12 @@ export default {
             }else if(!/^1[345678]\d{9}$/.test(that.phone)){
                 that.$toast('请填写正确的手机号码')
                 return false
-            }else if(that.verifyCode == ''){
-                that.$toast('验证码不能为空')
-                return false
-            }else if(that.password == ''){
+            }
+            // else if(that.verifyCode == ''){
+            //     that.$toast('验证码不能为空')
+            //     return false
+            // }
+            else if(that.password == ''){
                 that.$toast('密码不能为空')
                 return false
             }else if(!/^[a-z0-9_-]{6,18}$/.test(that.password)){
@@ -156,7 +158,7 @@ export default {
                 this.$axios.post(url,{
                     phone:this.phone,
                     type:2,
-                    verify_code:this.verifyCode,
+                    // verify_code:this.verifyCode,
                     user_password:this.password,
                     confirm_password:this.password2,
                 })

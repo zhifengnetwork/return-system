@@ -62,7 +62,7 @@ export default {
     top 0
     left 0
     z-index 9
-    border-bottom 1.5px solid #e6e6e6
+    // border-bottom 1.5px solid #e6e6e6
     .backBtn
         width 10%
         text-align center

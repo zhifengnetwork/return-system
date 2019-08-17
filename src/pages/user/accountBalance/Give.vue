@@ -25,23 +25,21 @@
             </div>
 
             <!-- 数字键盘 -->
-            <div v-show="paswPopup" class="pasw-popup">
-                <div class="-popup-cont">
+            <div v-show="showKeyboard" class="keyboard-popup">
+                <div class="popup-cont">
                     <van-password-input
                     :value="payPassword"
-                    @focus="showKeyboard = true"
                     />
                     <div class="fg-password"><router-link to="/user/SetPassword">忘记密码</router-link></div>
                     <van-number-keyboard
                     :show="showKeyboard"
                     @input="onInput"
                     @delete="onDelete"
-                    @blur="showKeyboard = true"
                     />
                 </div>
             </div>
 
-            <div class="confirm-btn" @click="confirmTransfer()">立即赠送</div>
+            <div class="confirm-btn" @click="showPopup()">立即赠送</div>
 
         </div>
         
@@ -63,9 +61,8 @@ export default {
             money:'',
 
             payPassword:'',     //支付密码
-            showPwd:false,
-            showKeyboard: true,
-            paswPopup:false,
+            showKeyboard:false, //是否显示数字键盘
+
         }
     },
     created(){
@@ -124,30 +121,53 @@ export default {
         },
 
         /**
-         * 转账
+         * 显示键盘 
+         */
+        showPopup(){
+            if(this.validateAll()){
+                // 显示数字密码键盘
+                this.showKeyboard = true;
+            }
+           
+        },
+
+        /**
+         * 确认转账
          */
         confirmTransfer(){
-             // 显示数字密码键盘
-            // this.showPwd = true;
-            // this.showKeyboard = true;
-            // this.paswPopup = true;
-            if(this.validateAll()){
-
-                let url = 'Balance/transfer_money';
-                this.$axios.post(url,{
-                    user_id:this.userData.id,
-                    to_user_id:parseInt(this.to_id),
-                    iphone:this.phone,
-                    money:this.money
-                }).then((res) => {
+            let url = 'Balance/transfer_money';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization,
+                to_user_id:parseInt(this.to_id),
+                iphone:this.phone,
+                money:this.money,
+                pwd:this.payPassword
+            }).then((res) => {
+                if(res.data.status == 200){
                     this.$toast({message:'赠送成功',duration:2000})
                     setTimeout(() => {
                         this.$router.replace('/user/AccountBalance')
                     },2000)
-                }).catch((error) => {
+                }
+                else if(res.data.status == 888){
+                    // 设置支付密码
+                    this.$toast.fail(res.data.msg);
+                    this.$router.replace('/user/SetPassword')
+                }
+                else if(res.data.status == 999){               
+                    this.$store.commit('del_token');              
+                    setTimeout(()=>{
+                        this.$router.push('/Login')
+                    },2000)
+                }
+                else{
+                    // 支付失败
+                    this.$toast.fail(res.data.msg);
+                }
+            }).catch((error) => {
 
-                })
-            }
+            })
+           
         },
 
         /**
@@ -156,14 +176,15 @@ export default {
         onInput(key) {  
             this.payPassword = (this.payPassword + key).slice(0, 6);
             if(this.payPassword.length === 6){ 
-                // 关闭密码输入
-                this.showKeyboard = false
-                this.showPwd = false
-                this.paswPopup = false
-                this.payPassword = ''
+                this.confirmTransfer(); // 执行转账
+                this.showKeyboard = false; // 关闭密码输入
+                this.payPassword = ''; //清空密码
             }
         },
 
+        /**
+         * 删除密码
+         */
         onDelete() {
             this.payPassword = this.payPassword.slice(0, this.payPassword.length - 1);
         },
@@ -171,8 +192,8 @@ export default {
         /**
          * 关闭密码蒙层，清空密码
          */
-        hidePwd(){
-            this.showPwd = false;
+        hideKeyboard(){
+            this.showKeyboard = false;
             this.payPassword = '';
         },
     },
@@ -242,7 +263,7 @@ export default {
             left 50%
             margin-left -46%
             bottom 30px
-        .pasw-popup
+        .keyboard-popup
             position fixed
             width 100%
             height 100%
@@ -250,7 +271,7 @@ export default {
             left 0
             z-index 9999
             background rgba(0,0,0,0.5)
-            .-popup-cont
+            .popup-cont
                 position absolute
                 bottom 0
                 z-index 1
