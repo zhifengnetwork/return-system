@@ -1,14 +1,16 @@
 <template>
-    <div class="noticeList">
+    <div class="NoticeList">
         <!-- 头部组件 -->
 		<TopHeader custom-title="公告列表">
 			<i slot="backBtn" class="iconfont icon-fanhui"></i>
 		</TopHeader>
+
         <div class="content">
             <div class="notice-list">
                 <ul>
-                    <router-link :to="'/notice/NoticeDetails?item_id='+item.id" tag="li" v-for="(item,index) in NotList" :key="index">
+                    <router-link :to="'/notice/NoticeDetails?item_id='+ item.id " v-for="(item,index) in noticeList" :key="index" tag="li">
                         <h3>{{item.title}}</h3>
+                        <div class="desc" v-html="item.desc"></div>
                         <span class="date">{{item.create_time | formatDate}}</span>
                     </router-link>
                 </ul>
@@ -23,24 +25,28 @@
 import TopHeader from "@/pages/common/header/TopHeader"
 export default {
     name:'NoticeList',
+    components:{
+        TopHeader
+    },
     data(){
         return{
-           NotList:[],
+           noticeList:[],
         }
     },
-    mounted() {
-        this.NotData()
+
+    created() {
+        this.reqNoticeData()
     },
+
     methods:{
-        NotData() {
+        reqNoticeData() {
             var url = "user/announce_list"
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization
             })
-            .then((res)=>{                
-                var that = this
-                if(res.data.status === 200){
-                    that.NotList = res.data.data.list;
+            .then((res)=>{    
+                if(res.data.status == 200){
+                    this.noticeList = res.data.data.list;
                 }else{
                     that.$toast(res.msg)
                 }
@@ -71,37 +77,53 @@ export default {
             return y + '-' + MM + '-' + d ;
         }
     },
-    components:{
-        TopHeader
-    }
+  
 }
 </script>
 
 <style lang="stylus" scoped>
-.noticeList
-    background-color #fff
-    min-height 100vh
+.NoticeList
+    height 100%
+    background-color #f2f2f2
+    & /deep/ .TopHeader
+        background-color #f2f2f2
     .content
-        padding-top 30px
+        padding 0 24px
+        box-sizing border-box
         .notice-list
             ul
                 li
-                    padding 10px 30px
+                    height 190px
                     font-size 28px
-                    line-height 50px
-                    border-bottom 1px solid #efefef
+                    background-color #fff
+                    margin-bottom 20px
+                    border-radius 10px
+                    padding 20px 36px
                     box-sizing border-box
+                    position relative
                     h3
-                        display -webkit-box
-                        overflow hidden
-                        -webkit-line-clamp 2
-                        -webkit-box-orient vertical
+                        line-height 44px
+                        margin-bottom 20px
                         font-weight normal
+                        overflow hidden
+                        text-overflow ellipsis
+                        white-space nowrap
+                    .desc
+                        width 100%
+                        font-size 26px
+                        overflow hidden 
+                        text-overflow ellipsis
+                        display -webkit-box 
+                        -webkit-box-orient vertical
+                        -webkit-line-clamp 1 
                     .date
                         display block
                         color #999999
                         font-size 24px
-                        text-align right 
+                        line-height 44px
+                        position absolute
+                        right 36px
+                        bottom 20px
 
 
 </style>

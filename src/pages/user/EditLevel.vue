@@ -13,7 +13,7 @@
                 </div>
                 <div class="group-item input-group">
                     <van-dropdown-menu>
-                        <van-dropdown-item v-model="currentValue" :options="levelArry" />
+                        <van-dropdown-item v-model="level" :options="levelArry" />
                     </van-dropdown-menu>
                 </div>
                 <div class="confirm-btn" @click="editLevel(lowe_id)">确定更改</div>
@@ -32,34 +32,54 @@
 		data() {
 			return{
                 lowe_id:'',
-                currentValue: 0,
+                level: 0,
                 levelArry: [
-                    { text: '普通会员', value: 0 },
-                    { text: '报单中心', value: 1 },
-                    { text: '经理', value: 2 },
-                    { text: '大区', value: 3 },
-                    { text: '全国总代', value: 4 }
+                    // { text: '普通会员', value: 0 },
+                    // { text: '报单中心', value: 1 },
+                    // { text: '经理', value: 2 },
+                    // { text: '大区', value: 3 },
+                    // { text: '全国总代', value: 4 }
                 ],
                
 			}
         },
-
+        created(){
+            this.getLevel();
+        },
         methods:{
             /**
-             * 修改用户名
+             * 获取级别列表数据
+             */
+            getLevel(){
+                let url = 'user/member_level_type';
+                this.$axios.post(url,{
+                    token:this.$store.getters.optuser.Authorization
+                }).then((res) => {
+                    if(res.data.status == 200){
+                        this.levelArry = res.data.data;
+                        console.log(this.levelArry)
+                    }else{
+                        this.$toast(res.data.msg)
+                    }
+                })
+            },
+
+            /**
+             * 修改下级级别
              */
             editLevel(lowe_id){
                 if(lowe_id == ''){
                     this.$toast("下级ID不能为空");
                     return false
                 }else{
-                    let url = '/user/edit_name';
+                    let url = 'user/update_son_level';
                     this.$axios.post(url,{
                         token:this.$store.getters.optuser.Authorization,
-                        id:this.lowe_id,
+                        user_id:this.lowe_id,
+                        level:this.level
                     }).then((res) => {
                         if(res.data.status == 200){
-                            this.lowe_id = id;
+                            console.log(res)
                             this.$toast({message:"级别修改成功",duration:1000})
                             setTimeout(() => {
                                 this.$router.go(-1);

@@ -16,12 +16,6 @@
                 </div>
                 <div class="group-item" v-html="serviceData.desc"></div>
             </div>
-
-            <!-- 无数据 -->
-            <!-- <div class="none">
-                <img src="/static/images/public/none.png"/>
-                <p>暂无相关数据</p>
-            </div> -->
         </div>
     </div>
 </template>
@@ -67,7 +61,7 @@
          * 拨打电话
          */
         onCall(tel){
-            console.log(tel)
+            // console.log(tel)
             window.location.href = `tel:${tel}`; 
         }
     },
@@ -105,12 +99,6 @@
             justify-content center
             .sub-title  
                 margin-right 10px
-    .none
-        text-align center
-        margin 150px auto
-        img
-            width 80px
-        p
-            margin 10px auto
-            font-size 24px                        
+            .text       
+                color #5facfa                     
 </style>

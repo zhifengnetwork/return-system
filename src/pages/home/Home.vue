@@ -16,7 +16,7 @@
 					:text = "item.title"
 					left-icon="volume-o"
 					color="#ff1616"
-					background="#a6aaff"
+					background="#7b95f9"
 				/>
 				<span class="sub-title">公告</span>
 			</router-link>
@@ -115,11 +115,14 @@ export default {
 .Home
 	width 100%
 	min-height 100vh
-	background-color #ffffff
+	// background-color #ffffff
+	background url("/static/images/home/home-bg.png") no-repeat
+	background-size 100% 
 	.banner
 		width 100%
 		height 380px
 		overflow hidden
+		background-color #fff
 		img 
 			max-width 100%
 			display block
