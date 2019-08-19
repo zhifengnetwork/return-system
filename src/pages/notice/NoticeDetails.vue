@@ -29,6 +29,7 @@ export default {
         }
     },
     created() {
+        this.$store.commit('showLoading');
         this.reqnoticeDetails();
     },
     methods:{
@@ -39,6 +40,7 @@ export default {
                 announce_id:this.notice_id
             }).then((res) => {  
                 if(res.data.status === 200){
+                    this.$store.commit('hideLoading')
                     this.noticeDetails = res.data.data;
                 }else{
                     this.$toast(res.msg)

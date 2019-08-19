@@ -35,7 +35,8 @@ export default {
     },
 
     created() {
-        this.reqNoticeData()
+        this.$store.commit('showLoading');
+        this.reqNoticeData();
     },
 
     methods:{
@@ -46,6 +47,7 @@ export default {
             })
             .then((res)=>{    
                 if(res.data.status == 200){
+                    this.$store.commit('hideLoading');
                     this.noticeList = res.data.data.list;
                 }else{
                     that.$toast(res.msg)

@@ -24,7 +24,7 @@
 
             <div class="module-box">
                 <div class="row-line">
-                    <div class="sub-title">商家ID:</div>
+                    <div class="sub-title">商家ID：</div>
                     <div class="text">
                         <input type="number" placeholder="请输入商家id" v-model="otc_id">
                     </div>
@@ -33,10 +33,10 @@
 
             <div class="address-links">
                 <div class="link-item" v-for="(item,index) in linkArr" :key="index">
-                    <div class="sub-title">{{item.name}}:</div>
-                    <div class="text">{{item.url}}</div>
+                    <div class="sub-title">{{item.coin_name}}:</div>
+                    <div class="text">{{item.coin_address}}</div>
                     <div class="copy-btn"
-                        v-clipboard:copy="item.url"
+                        v-clipboard:copy="item.coin_address"
                         v-clipboard:success="onCopy"
                         v-clipboard:error="onError"
                     >复制</div>
@@ -129,6 +129,7 @@ export default {
 
     created(){
         this.reqData();
+        this.reqCoinInfo();
     },
 
     methods:{
@@ -143,7 +144,31 @@ export default {
                 if(res.data.status == 200){
                     this.scale = (res.data.data.bili[1]) / res.data.data.bili[0];
                     this.receiptData = res.data.data.info;
-                    // console.log(this.receiptData)
+                }
+                else if(res.data.status == 999){
+                    this.$store.commit('del_token'); 
+                    setTimeout(() => {
+                        this.$router.push("/Login");
+                    }, 1000);
+                }
+                else{
+                    this.$toast(res.data.msg)
+                }
+            }).catch((error) => {
+                alert("请求失败:" + error)
+            })
+        },
+
+        /**
+         * 币种列表
+         */
+        reqCoinInfo(){
+            let url = 'user/coin_info';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization,
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.linkArr = res.data.data;
                 }
                 else if(res.data.status == 999){
                     this.$store.commit('del_token'); 
@@ -292,6 +317,10 @@ export default {
                     margin-right 10px
                 .text
                     flex 1
+                    word-break keep-all
+                    white-space nowrap
+                    overflow hidden
+                    text-overflow ellipsis 
                     input 
                         width 200px
                         line-height 50px
@@ -314,8 +343,12 @@ export default {
                     margin-right 10px
                 .text
                     flex 1
+                    word-break keep-all
+                    white-space nowrap
+                    overflow hidden
+                    text-overflow ellipsis 
                 .copy-btn
-                    width 100px
+                    width 80px
                     height 40px
                     font-size 26px
                     text-align center
