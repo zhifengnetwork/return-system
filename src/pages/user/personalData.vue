@@ -158,7 +158,7 @@
                     justify-content space-between
                     .sub-title  
                         width 120px
-                        text-align right 
+                        text-align-last justify
                     .right
                         height 100%
                         display flex  

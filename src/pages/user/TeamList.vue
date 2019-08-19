@@ -21,7 +21,7 @@
                     <div class="member-item" v-for="(item,index) in teamList" :key="index">
                         <div class="column">{{item.id}}</div>
                         <div class="column">{{item.realname}}</div>
-                        <div class="column">{{item.mobile}}</div>
+                        <div class="column" @click="onCall(item.mobile)">{{item.mobile}}</div>
                         <div class="column"><router-link :to="'/user/ViewOrders?user_ids=' + item.id">查看</router-link></div>
                     </div>
                 </div>
@@ -87,6 +87,14 @@ export default {
             })
             
         },
+
+        /**
+         * 拨打电话
+         */
+        onCall(tel){
+            // console.log(tel)
+            window.location.href = `tel:${tel}`; 
+        }
 
     }
 }

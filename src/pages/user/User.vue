@@ -68,7 +68,16 @@
                         <div class="more"></div>
                     </div>
                 </router-link>
-                <router-link to="/user/ReceiptInformation">
+                <router-link to="/user/EditLevel">
+                    <div class="link-item">
+                        <div class="fl">
+                            <span class="icon"><img src="/static/images/user/level-icon.png" /></span>
+                            <span class="text">等级更改</span>
+                        </div>
+                        <div class="more"></div>
+                    </div>
+                </router-link>
+                <!-- <router-link to="/user/ReceiptInformation">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/money-icon.png" /></span>
@@ -76,7 +85,7 @@
                         </div>
                         <div class="more"></div>
                     </div>
-                </router-link>
+                </router-link> -->
                 <div class="link-item">
                     <div class="fl">
                         <span class="icon"><img src="/static/images/user/tel-icon.png" /></span>

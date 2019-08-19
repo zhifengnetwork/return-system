@@ -12,7 +12,7 @@
                 </div>
                 <div class="group-item">
                     <div class="sub-title">客服电话:</div>
-                    <div class="text">{{serviceData.urllink}}</div>
+                    <div class="text" @click="onCall(serviceData.urllink)">{{serviceData.urllink}}</div>
                 </div>
                 <div class="group-item" v-html="serviceData.desc"></div>
             </div>
@@ -44,24 +44,32 @@
     },
    
     methods:{
-       /**
-        * 请求数据
-        */
-       reqData(){
-           let url = 'user/get_service_info';
-           this.$axios.post(url,{
-               token:this.$store.getters.optuser.Authorization,
-           }).then((res) => {
-               if(res.data.status == 200){
-                   this.serviceData = res.data.data;
-               }else{
-                   this.$toast(res.data.msg) 
-               }
-               this.$store.commit('hideLoading')
-           }).catch((error) => {
-               this.$toast(error)
-           })
-       }
+        /**
+            * 请求数据
+            */
+        reqData(){
+            let url = 'user/get_service_info';
+            this.$axios.post(url,{
+                token:this.$store.getters.optuser.Authorization,
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.serviceData = res.data.data;
+                }else{
+                    this.$toast(res.data.msg) 
+                }
+                this.$store.commit('hideLoading')
+            }).catch((error) => {
+                this.$toast(error)
+            })
+        },
+
+        /**
+         * 拨打电话
+         */
+        onCall(tel){
+            console.log(tel)
+            window.location.href = `tel:${tel}`; 
+        }
     },
 	
 };

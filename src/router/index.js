@@ -49,6 +49,9 @@ import BillDetails from '@/pages/user/accountBalance/BillDetails'
 // 收款信息
 import ReceiptInformation from '@/pages/user/ReceiptInformation'
 
+// 等级更改
+import EditLevel from '@/pages/user/EditLevel'
+
 // 团队列表
 import TeamList from '@/pages/user/TeamList'
 // 查看订单
@@ -263,6 +266,13 @@ const router= new Router({
 			path: '/user/ReceiptInformation',
 			name: 'ReceiptInformation',
 			component:() => import('@/pages/user/ReceiptInformation'),
+			meta:{requireAuth:true}
+		},
+		// 等级更改
+		{
+			path: '/user/EditLevel',
+			name: 'EditLevel',
+			component:() => import('@/pages/user/EditLevel'),
 			meta:{requireAuth:true}
 		},
 		// 团队列表
