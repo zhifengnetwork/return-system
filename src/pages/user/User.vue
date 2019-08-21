@@ -68,7 +68,7 @@
                         <div class="more"></div>
                     </div>
                 </router-link>
-                <router-link to="/user/EditLevel" v-show="personalData.level > 2">
+                <router-link to="/user/EditLevel" v-show="personalData.level > 1">
                     <div class="link-item">
                         <div class="fl">
                             <span class="icon"><img src="/static/images/user/level-icon.png" /></span>

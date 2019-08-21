@@ -110,9 +110,9 @@ export default {
             otc_id:'', //商家id
             receiptData:[], //收款信息
             linkArr:[
-                {name:"BTC",url:"baidu.com"},
-                {name:"ETH",url:"baidu.com"},
-                {name:"SDT",url:"zhifengwangluo.com"},
+                // {name:"BTC",url:"baidu.com"},
+                // {name:"ETH",url:"baidu.com"},
+                // {name:"SDT",url:"zhifengwangluo.com"},
             ]
         }
     },
