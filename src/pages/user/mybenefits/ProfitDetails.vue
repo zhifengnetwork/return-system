@@ -16,7 +16,7 @@
                     <div class="record-item" v-for="(item,index) in this.profitList">
                         <div class="column">{{item.createtime | formatDate}}</div>
                         <div class="column">{{item.amplify_amount_day}}</div>
-                        <div class="column">描述</div>
+                        <div class="column">商家ID:{{item.otc_id}}</div>
                     </div>
                 </div>
 

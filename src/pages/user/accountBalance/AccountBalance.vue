@@ -7,8 +7,14 @@
 
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">我的余额</div>
-                <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                <div class="money-item">
+                    <div class="sub-title">可提现余额</div>
+                    <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                </div>
+                <div class="money-item">
+                    <div class="sub-title">冻结余额</div>
+                    <div class="money">{{accountData.pay_points | formatMoney}}</div>
+                </div>
             </div>
             <div class="group-btn">
                 <router-link to="/user/CashWithdrawal">
@@ -102,14 +108,18 @@ export default {
             background-size 100%
             display flex
             align-items center
-            justify-content center
-            flex-direction column
+            justify-content space-around
             margin-bottom 30px
-            .sub-title
-                font-size 30px
-                margin-bottom 40px
-            .money
-                font-size 36px
+            .money-item
+                display flex
+                align-items center
+                justify-content center
+                flex-direction column
+                .sub-title
+                    font-size 30px
+                    margin-bottom 40px
+                .money
+                    font-size 36px
         .group-btn
             display flex
             justify-content space-between

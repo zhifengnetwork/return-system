@@ -125,71 +125,76 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.content
-    padding 0 24px
-    box-sizing border-box
-    .tab-title
-        height 70px
-        font-size 28px
-        background-color #ffffff
-        display flex
-        align-items center
-        justify-content space-around
-        span 
-            flex 1
-            text-align center
-            height 100%
-            line-height 70px
-            &.active
-                color #ef1010
-    .tab-container
-        .thead  
-            height 50px
-            font-size 26px
-            display flex
-            align-items center
-            justify-content space-between
-            background-color #ffc9b4
-            span 
-                text-align center
-                display block 
-            span:nth-child(1)
-                width 30%
-            span:nth-child(2)
-                width 20%
-            span:nth-child(3)
-                width 20%
-            span:nth-child(4)
-                width 30%
-        .record-item
-            width 100%
+.BillDetails
+    width 100%
+    height 100%
+    background-color #fff
+    .content
+        padding 0 24px
+        box-sizing border-box
+        .tab-title
             height 70px
+            font-size 28px
+            background-color #ffffff
             display flex
             align-items center
-            background-color #fff4f0
-            .column
+            justify-content space-around
+            span 
+                flex 1
                 text-align center
-                font-size 20px
-            .column:nth-child(1)
-                width 30%
-                text-align left 
-                padding-left 20px
-                box-sizing border-box
-            .column:nth-child(2)
-                width 20%
-            .column:nth-child(3)
-                width 20%
-            .column:nth-child(4)
-                width 30%
-            &:nth-child(even)
-                background-color #ffede7
-        .none
-            text-align center
-            margin 150px auto
-            img
-                width 80px
-            p
-                margin 10px auto
-                font-size 24px
+                height 100%
+                line-height 70px
+                &.active
+                    color #ef1010
+        .tab-container
+            .thead  
+                height 50px
+                font-size 26px
+                display flex
+                align-items center
+                justify-content space-between
+                background-color #ffc9b4
+                span 
+                    text-align center
+                    display block 
+                span:nth-child(1)
+                    width 30%
+                span:nth-child(2)
+                    width 20%
+                span:nth-child(3)
+                    width 20%
+                span:nth-child(4)
+                    width 30%
+            .record-item
+                width 100%
+                height 70px
+                display flex
+                align-items center
+                background-color #fff4f0
+                .column
+                    text-align center
+                    font-size 20px
+                .column:nth-child(1)
+                    width 30%
+                    text-align left 
+                    padding-left 20px
+                    box-sizing border-box
+                    word-wrap break-word
+                .column:nth-child(2)
+                    width 20%
+                .column:nth-child(3)
+                    width 20%
+                .column:nth-child(4)
+                    width 30%
+                &:nth-child(even)
+                    background-color #ffede7
+            .none
+                text-align center
+                margin 150px auto
+                img
+                    width 80px
+                p
+                    margin 10px auto
+                    font-size 24px
 
 </style>

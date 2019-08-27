@@ -51,7 +51,8 @@
 		data() {
 			return{
                 personalData:'', //用户资料
-                userName:'' //用户名
+                userName:'', //用户名
+                isClick:false
 			}
         },
 
@@ -104,6 +105,10 @@
              * 退出登录
              */
             logout() {
+                if(this.isClick){
+                    return 
+                }
+                this.isClick = true;
                 let url = '/user/logout';
                 this.$dialog.confirm({
                     title:'温馨提示',
@@ -121,6 +126,9 @@
                         }else{
                             this.$toast(res.data.msg)
                         }
+                        this.isClick = false
+                    }).catch((error) => {
+                        this.isClick = false
                     })
                 }).catch(() => {
                     // on cancel

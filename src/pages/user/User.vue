@@ -14,12 +14,11 @@
                 </div>
             </div>
             <div class="member-msg">
-                <div class="level" v-if="personalData.level === 0">普通用户</div>
-                <div class="level" v-if="personalData.level === 1">VIP会员</div>
-                <div class="level" v-if="personalData.level === 2">官方经理</div>
-                <div class="level" v-if="personalData.level === 3">高级经理</div>
-                <div class="level" v-if="personalData.level === 4">大区经理</div>
-                <div class="level" v-if="personalData.level === 5">联合创始人</div>
+                <div class="level" v-if="personalData.level === 0">农民</div>
+                <div class="level" v-if="personalData.level === 1">中农</div>
+                <div class="level" v-if="personalData.level === 2">富农</div>
+                <div class="level" v-if="personalData.level === 3">地主</div>
+                <div class="level" v-if="personalData.level === 4">农场主</div>
             </div>
             
         </div>

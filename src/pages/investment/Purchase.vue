@@ -8,9 +8,9 @@
         <div class="content">
             <div class="module-box">
                 <div class="row-line">
-                    <div class="sub-title">当前投资币：</div>
+                    <div class="sub-title">当前投资金额：</div>
                     <div class="text">
-                        <input type="number" placeholder="请输入投资币" v-model="currencyVal" @blur.prevent="validateVal()" ref="currencyVal">
+                        <input type="number" placeholder="请输入投资金额" v-model="currencyVal" @blur.prevent="validateVal()" ref="currencyVal">
                     </div>
                 </div>
             </div>
@@ -33,6 +33,7 @@
 
             <div class="address-links">
                 <div class="link-item" v-for="(item,index) in linkArr" :key="index">
+                    <div class="price">{{item.coin_price}}</div>
                     <div class="sub-title">{{item.coin_name}}:</div>
                     <div class="text">{{item.coin_address}}</div>
                     <div class="copy-btn"
@@ -113,7 +114,8 @@ export default {
                 // {name:"BTC",url:"baidu.com"},
                 // {name:"ETH",url:"baidu.com"},
                 // {name:"SDT",url:"zhifengwangluo.com"},
-            ]
+            ],
+            isClick:false
         }
     },
 
@@ -244,9 +246,14 @@ export default {
                 else if(fileObj == '' || typeof(fileObj) == 'undefined'){
                     return this.$toast('亲,还没有选择上传的凭证哦!')
                 }
+                else if(this.isClick){
+                    return
+                }
                 else{
                     fileObj = this.fileList[0].content;
                 }
+
+                this.isClick = true;
 
                 let url = 'pay/investmentsub';
                 this.$axios.post(url,{
@@ -269,8 +276,10 @@ export default {
                     else{
                         this.$toast(res.data.msg)
                     }
+                    this.isClick = false;
                 }).catch((error) => {
                     alert('请求错误:' + error)
+                    this.isClick = false;
                 })
             }
             
@@ -339,6 +348,9 @@ export default {
                 box-sizing border-box
                 &:last-child
                     border-bottom none
+                .price  
+                    width 120px
+                    margin-right 20px
                 .sub-title
                     margin-right 10px
                 .text

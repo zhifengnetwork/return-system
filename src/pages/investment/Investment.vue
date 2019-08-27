@@ -4,8 +4,16 @@
             <div class="investment-list">
                 <div class="investment-item" v-for="(item,index) in recordData" :key="index">
                     <div class="row-line">
+                        <div class="sub-title">商家ID :</div>
+                        <div class="right">{{item.otc_id}}</div>
+                    </div>
+                    <div class="row-line">
                         <div class="sub-title">投资金额 :</div>
                         <div class="right">{{item.vigor_value}}</div>
+                    </div>
+                    <div class="row-line">
+                        <div class="sub-title">订单号 :</div>
+                        <div class="right">{{item.order_sn}}</div>
                     </div>
                     <div class="row-line">
                         <div class="sub-title">投资时间 :</div>
@@ -134,7 +142,7 @@ export default {
             margin-top 20px
             .investment-item
                 width 100%
-                height 200px
+                height 300px
                 font-size 30px
                 background-color #fff
                 border-radius 10px
@@ -148,7 +156,9 @@ export default {
                     display flex
                     line-height 56px
                     .sub-title
+                        width 140px
                         margin-right 15px
+                        text-align-last justify
         .none
             text-align center
             margin 0px auto

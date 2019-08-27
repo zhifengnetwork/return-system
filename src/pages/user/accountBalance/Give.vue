@@ -6,8 +6,14 @@
         </TopHeader>
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">我的余额</div>
-                <div class="money">{{userData.remainder_money | formatMoney}}</div>
+                <div class="money-item">
+                    <div class="sub-title">可提现余额</div>
+                    <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                </div>
+                <div class="money-item">
+                    <div class="sub-title">冻结余额</div>
+                    <div class="money">{{accountData.pay_points | formatMoney}}</div>
+                </div>
             </div>
             <div class="form-container">
                 <div class="input-group">
@@ -55,41 +61,32 @@ export default {
     },
     data(){
         return{
-            userData:{},
+            accountData:{},
             to_id:'',
             phone:'',
             money:'',
-
             payPassword:'',     //支付密码
             showKeyboard:false, //是否显示数字键盘
-
+            isClick:false
         }
     },
     created(){
         this.$store.commit('showLoading');
-        this.reqUser();
+        this.reqAccount();
     },
     methods:{
         /**
          * 请求数据
          */
-        reqUser() {
-            let url = 'user/user_info'
+        reqAccount(){
+            let url = '/user/user_remainder';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization
-            })
-            .then((res)=>{   
-                this.$store.commit('hideLoading')
-                if(res.data.status === 200){
-                    this.userData = res.data.data;
-                }
-                else if(res.data.status === 999){
-                    this.$store.commit('del_token'); //清除token;
-                    setTimeout(()=>{
-                        this.$router.push('/Login')
-                    },1000)
-                }
-                else{
+            }).then((res) => {
+                if(res.data.status == 200){
+                    this.accountData = res.data.data;
+                    this.$store.commit('hideLoading');
+                }else{
                     this.$toast(res.data.msg)
                 }
             })
@@ -135,6 +132,11 @@ export default {
          * 确认转账
          */
         confirmTransfer(){
+            if(this.isClick){
+                return
+            }
+            this.isClick = true;
+
             let url = 'Balance/transfer_money';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
@@ -164,8 +166,9 @@ export default {
                     // 支付失败
                     this.$toast.fail(res.data.msg);
                 }
+                this.isClick = false;
             }).catch((error) => {
-
+                this.isClick = false;
             })
            
         },
@@ -221,14 +224,18 @@ export default {
             background-size 100%
             display flex
             align-items center
-            justify-content center
-            flex-direction column
+            justify-content space-around
             margin-bottom 70px
-            .sub-title
-                font-size 30px
-                margin-bottom 40px
-            .money
-                font-size 36px
+            .money-item
+                display flex
+                align-items center
+                justify-content center
+                flex-direction column
+                .sub-title
+                    font-size 30px
+                    margin-bottom 40px
+                .money
+                    font-size 36px
         .form-container
             margin 0 110px
             .input-group

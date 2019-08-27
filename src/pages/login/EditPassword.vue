@@ -51,7 +51,6 @@ export default {
             password:'',//密码
             password2:'',//重复密码
             isClick:false,
-            flag:false
         }
     },
     methods:{
@@ -94,11 +93,11 @@ export default {
                     else{
                         this.$toast(res.data.msg)
                     }
-                    this.isClick =false
+                    this.isClick = false
                 })
                 .catch((error) => {
                     this.$toast('请求错误')
-                    this.isClick =false
+                    this.isClick = false
                 })
             } 
         },
@@ -169,10 +168,10 @@ export default {
                 return false
             }else{
 
-                if(this.flag){
+                if(this.isClick){
                     return;
                 }
-                this.flag = true;
+                this.isClick = true;
                 // 请求修改密码接口
                 var url = "/user/resetPassword"
                 var params = new URLSearchParams();
@@ -200,7 +199,7 @@ export default {
                 }) 
                 .catch((error) => {
                     this.$toast('请求错误')
-                    this.flag = false;
+                    this.isClick = false;
                 }) 
             }
         },

@@ -7,8 +7,14 @@
 
         <div class="content">
             <div class="amount-money">
-                <div class="sub-title">可提现金额</div>
-                <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                <div class="money-item">
+                    <div class="sub-title">可提现余额</div>
+                    <div class="money">{{accountData.remainder_money | formatMoney}}</div>
+                </div>
+                <div class="money-item">
+                    <div class="sub-title">冻结余额</div>
+                    <div class="money">{{accountData.pay_points | formatMoney}}</div>
+                </div>
             </div>
             <!-- 提现方式 -->
             <div class="withdrawal-way">
@@ -87,7 +93,7 @@
                     <div class="fr">元</div>
                 </div>
                 <div class="group-item">
-                    <div class="fl">返回余额：{{returnMoney}}</div>
+                    <div class="fl">冻结余额：{{returnMoney}}</div>
                     <div class="fr">元</div>
                 </div>
                 <div class="group-item">
@@ -133,7 +139,8 @@ export default {
             money:'', //提现金额
             rate:'', //费率
             fee:0, //手续费
-            returnMoney:0 //退回余额
+            returnMoney:0, //退回余额
+            isClick:false
         }
     },
     created(){
@@ -239,6 +246,10 @@ export default {
                 this.$toast('请输入提现金额')
                 return false
             }
+            else if(this.isClick){
+                return
+            }
+            this.isClick = true;
             let url = 'user/withdrawal';
             this.$axios.post(url,{
                 token:this.$store.getters.optuser.Authorization,
@@ -257,8 +268,9 @@ export default {
                 }else{
                     this.$toast(res.data.msg)
                 }
+                this.isClick = false
             }).catch((error) => {
-
+                this.isClick = false
             })
         }
 
@@ -288,14 +300,18 @@ export default {
             background-size 100%
             display flex
             align-items center
-            justify-content center
-            flex-direction column
+            justify-content space-around
             margin-bottom 30px
-            .sub-title
-                font-size 30px
-                margin-bottom 40px
-            .money
-                font-size 36px
+            .money-item
+                display flex
+                align-items center
+                justify-content center
+                flex-direction column
+                .sub-title
+                    font-size 30px
+                    margin-bottom 40px
+                .money
+                    font-size 36px
         .withdrawal-way
             h3
                 font-size 28px
