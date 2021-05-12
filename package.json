@@ -16,7 +16,7 @@
     "lib-flexible": "^0.3.2",
     "postcss-px2rem-exclude": "0.0.6",
     "qrcodejs2": "0.0.2",
-    "swiper": "^4.5.0",
+    "swiper": "^6.5.1",
     "vant": "^2.0.9",
     "vue": "^2.5.2",
     "vue-clipboard2": "^0.3.0",
